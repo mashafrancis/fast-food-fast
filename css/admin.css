@@ -85,10 +85,10 @@ h3,
 h4,
 h5,
 h6 {
-    color: #333333;
-    font-weight: 700;
+    color: #575757;
+    font-weight: 600;
     margin: 0;
-    line-height: 1.2;
+    line-height: 2;
 }
 
 h1 {
@@ -335,6 +335,13 @@ strong {
         height: 100%;
     }
 
+    .wrapper-order {
+        width: 100%;
+        margin-top: 0;
+        padding: 0 300px 0;
+        height: 100%;
+    }
+
     .admin-links {
         overflow: hidden;
     }
@@ -509,3 +516,46 @@ strong {
     background-color: #e6e6e6;
 }
 
+
+.table-styling tbody td.pending {
+    color: #c3c300;
+}
+
+.table-styling tbody td.confirmed {
+    color: #00ad5f;
+}
+
+.table-styling tbody td.denied {
+    color: #ad1705;
+}
+
+.table-styling tbody td.delivered {
+    color: #0045ad;
+}
+
+.table-order-details.table td {
+    border-top: none;
+    border-bottom: 1px solid #c5c5c5;
+    font-size: 12px;
+    padding: 6px 32px;
+}
+
+.table-order-details.table tr td:first-child {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.table-order-details.table tr td:last-child {
+    text-align: left;
+    font-size: 14px;
+}
+
+.table-order-details.table tr:last-child td {
+    border-bottom: none;
+}
+
+.order h4 {
+    line-height: 3;
+    font-weight: 600;
+    color: teal;
+}
