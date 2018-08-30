@@ -72,7 +72,7 @@
             <div class="order">
                 <h4>Order</h4>
                 <div class="table-responsive">
-                    <table class="table table-order-details">
+                    <table class="table table-order-details table-styling">
                         <tbody>
                         <tr>
                             <td>Order ID</td>
@@ -84,7 +84,7 @@
                         </tr>
                         <tr>
                             <td>Status</td>
-                            <td>Confirmed</td>
+                            <td class="confirmed">Confirmed</td>
                         </tr>
                         <tr>
                             <td>Checkout</td>
@@ -92,7 +92,15 @@
                         </tr>
                         <tr>
                             <td>Change Order Status</td>
-                            <td>Delivery</td>
+                            <td>
+                                <select name="select" id="select" class="form-control">
+                                    <option>Pending</option>
+                                    <option>Confirmed</option>
+                                    <option>Declined</option>
+                                    <option>Delivered</option>
+                                </select><br>
+                                <input type="submit" class="button">
+                            </td>
                         </tr>
                         </tbody>
                     </table>

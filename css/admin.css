@@ -559,3 +559,58 @@ strong {
     font-weight: 600;
     color: teal;
 }
+
+/*Styling for buttons*/
+
+.button {
+    display: inline;
+    border-radius: 3px;
+    background-color: #006565;
+    border: none;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    padding: 8px;
+    width: 100px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 0;
+    float: right;
+    text-decoration: #cccccc;
+}
+
+.button span {
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+
+.button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+
+.button:hover span {
+    padding-right: 25px;
+}
+
+.button:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-radius: 0.25rem 0.25rem;
+}
