@@ -65,7 +65,6 @@ p {
     border-radius: 3px;
 }
 
-
 /* ----- Typography ----- */
 body {
     margin: 0;
@@ -123,7 +122,6 @@ blockquote {
 strong {
     font-weight: 700;
 }
-
 
 .header {
     position: absolute;
@@ -246,7 +244,6 @@ strong {
     background: #00b0b0;
 }
 
-
 .side-nav ul li a {
     color: #fff;
     display: block;
@@ -267,10 +264,8 @@ strong {
 
 /* main content styles */
 .main-content {
-    padding: 40px;
     margin-top: 0;
-    padding: 0;
-    padding-top: 44px;
+    padding: 44px 40px 40px;
     height: 100%;
     overflow: scroll;
 }
@@ -333,40 +328,11 @@ strong {
 
 @media only screen and (min-width: 1000px) {
     /* Style adjustments for viewports that meet the condition */
-    header .header-brand {
-        font-size: 24px;
-        font-weight: 600;
-        color: #111;
-        display: block;
-        margin: 31px 0;
-        text-align: center;
-        padding: 4px 0;
-        align-content: center;
-        text-decoration: none;
-        float: left;
-        line-height: 38%;
-    }
-
-    header .header-brand {
-        margin: 31px 0;
-        text-align: left;
-        line-height: 38px;
-        padding: 0 20px 0 40px;
-        float: left;
-    }
-
-    header nav ul {
-        margin: 20px 0 0 20px;
-        float: right;
-    }
-
-    header nav ul li a {
-        line-height: 60px;
-    }
-
     .wrapper {
-        width: 1000px;
-        margin: 0 auto;
+        width: 100%;
+        margin-top: 0;
+        padding: 20px 0 40px;
+        height: 100%;
     }
 
     .admin-links {
@@ -397,8 +363,6 @@ strong {
         line-height: 160px;
     }
 }
-
-
 
 /* set element styles to fit tablet and higher(desktop) */
 @media screen and (min-width: 600px) {
@@ -507,4 +471,41 @@ strong {
     font-weight: 600;
 }
 
+/* ----- Table ----- */
+.table {
+    margin: 0;
+}
+
+.table-styling thead th {
+    background: #333;
+    font-size: 14px;
+    color: #fff;
+    vertical-align: middle;
+    font-weight: 400;
+    text-transform: capitalize;
+    line-height: 1;
+    padding: 10px 16px;
+    white-space: nowrap;
+    text-align: left;
+}
+
+.table-styling tbody td {
+    color: #808080;
+    padding: 10px 16px;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+.table-styling tbody tr:hover td {
+    color: #555;
+    cursor: pointer;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #fff;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #e6e6e6;
+}
 
