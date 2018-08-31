@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Order1024</title>
+
+    <link rel="stylesheet" href="./css/admin.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="./js/main.js"></script>
+
+</head>
+<body>
+<div class="header">
+    <div class="logo">
+        <span>Fast Food Fast</span>
+    </div>
+    <a href="#" class="nav-trigger"><span></span></a>
+</div>
+<div class="side-nav">
+    <div class="logo">
+        <span>Fast Food Fast</span>
+    </div>
+    <nav>
+        <ul>
+            <li>
+                <a href="admin-dashboard.html">
+                    <span><i class="fas fa-home"></i></span>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="customers.html">
+                    <span><i class="fas fa-user"></i></span>
+                    <span>Customers</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="orders.html">
+                    <span><i class="fas fa-history"></i></span>
+                    <span>Orders</span>
+                </a>
+            </li>
+            <li>
+                <a href="food-item.html">
+                    <span><i class="fas fa-utensils"></i></span>
+                    <span>Food Section</span>
+                </a>
+            </li>
+            <li>
+                <a href="reviews.html">
+                    <span><i class="fas fa-comment-alt"></i></span>
+                    <span>Customer Reviews</span>
+                </a>
+            </li>
+            <li>
+                <a href="index.html">
+                    <span><i class="fas fa-sign-out-alt"></i></i></span>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="main-content">
+    <div class="title">
+        Orders Details #1024
+    </div>
+
+    <div class="wrapper-order">
+        <section>
+            <!-- ORDER FORM -->
+            <div class="order">
+                <h4>Order</h4>
+                <div class="table-responsive">
+                    <table class="table table-order-details table-styling">
+                        <tbody>
+                        <tr>
+                            <td>Order ID</td>
+                            <td>1024</td>
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td>2018-08-29 05:57</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td class="confirmed">Confirmed</td>
+                        </tr>
+                        <tr>
+                            <td>Checkout</td>
+                            <td>Delivery</td>
+                        </tr>
+                        <tr>
+                            <td>Change Order Status</td>
+                            <td>
+                                <select name="select" id="select" class="form-control">
+                                    <option>Pending</option>
+                                    <option>Confirmed</option>
+                                    <option>Declined</option>
+                                    <option>Delivered</option>
+                                </select><br>
+                                <input type="submit" class="button">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Item</h4>
+                    <table class="table table-borderless table-striped table-styling">
+                        <thead>
+                        <tr>
+                            <th>name</th>
+                            <th>quantity</th>
+                            <th>price</th>
+                            <th>subtotal</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Veg. Hawaiian Salad</td>
+                            <td>10</td>
+                            <td>50</td>
+                            <td>500</td>
+                        </tr>
+                        <tr>
+                            <td>Chicken Penne Pasta</td>
+                            <td>2</td>
+                            <td>250</td>
+                            <td>500</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Address</h4>
+                    <table class="table table-order-details">
+                        <tbody>
+                        <tr>
+                            <td>First Name</td>
+                            <td>Francis</td>
+                        </tr>
+                        <tr>
+                            <td>Last Name</td>
+                            <td>Masha</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>francis@test.com</td>
+                        </tr>
+                        <tr>
+                            <td>Phone</td>
+                            <td>0724234567</td>
+                        </tr>
+                        <tr>
+                            <td>City</td>
+                            <td>Nairobi</td>
+                        </tr>
+                        <tr>
+                            <td>Zipcode</td>
+                            <td>00515</td>
+                        </tr>
+                        <tr>
+                            <td>Address line 1</td>
+                            <td>012</td>
+                        </tr>
+                        <tr>
+                            <td>Address line 2</td>
+                            <td>123</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Payment</h4>
+                    <table class="table table-order-details">
+                        <tbody>
+                        <tr>
+                            <td>Tax</td>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Delivery Charge</td>
+                            <td>Ksh 50</td>
+                        </tr>
+                        <tr>
+                            <td>Sub Total</td>
+                            <td>Ksh 1000</td>
+                        </tr>
+                        <tr>
+                            <td>Payed Amount</td>
+                            <td>Ksh 1050</td>
+                        </tr>
+                        <tr>
+                            <td>Payed Mode</td>
+                            <td>Cash</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>
