@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Order1024</title>
+
+    <link rel="stylesheet" href="./css/admin.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="./js/main.js"></script>
+    <script type="text/javascript">
+        function Confirm(form) {
+            alert("Food item created successfully!");
+            form.submit();
+        }
+    </script>
+
+</head>
+<body>
+<div class="header">
+    <div class="logo">
+        <span>Fast Food Fast</span>
+    </div>
+    <a href="#" class="nav-trigger"><span></span></a>
+</div>
+<div class="side-nav">
+    <div class="logo">
+        <span>Fast Food Fast</span>
+    </div>
+    <nav>
+        <ul>
+            <li>
+                <a href="admin-dashboard.html">
+                    <span><i class="fas fa-home"></i></span>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span><i class="fas fa-user"></i></span>
+                    <span>Customers</span>
+                </a>
+            </li>
+            <li>
+                <a href="orders.html">
+                    <span><i class="fas fa-history"></i></span>
+                    <span>Orders</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="food-item.html">
+                    <span><i class="fas fa-utensils"></i></span>
+                    <span>Food Section</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span><i class="fas fa-comment-alt"></i></span>
+                    <span>Customer Reviews</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="main-content">
+    <div class="title">
+        Add another food item or go back?
+        <a href="food-item.html">
+            <button class="admin-button"><i class="fas fa-arrow-left"></i>&nbsp;Back</button>
+        </a>
+    </div>
+    <div class="wrapper-order">
+        <form>
+            <ul class="flex-outer">
+                <li>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Enter the name of food">
+                </li>
+                <li>
+                    <label for="description">Description</label>
+                    <textarea name="text" id="description" placeholder="Enter the food details..."></textarea>
+                </li>
+                <li>
+                    <label for="category">Category</label>
+                    <select name="category" id="category-food" class="form-control">
+                        <option>Select</option>
+                        <option>PIZZA</option>
+                        <option>PASTA</option>
+                        <option>FRIES</option>
+                        <option>BURGER</option>
+                        <option>SALAD</option>
+                        <option>DRINKS</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="address">Featured?</label>
+                    <select name="category" id="select" class="form-control">
+                        <option>No</option>
+                        <option>Yes</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="image-input">Image</label>
+                    <input type="file" id="image-input" name="file-input" class="form-control">
+                </li>
+                <li>
+                    <label for="price">Price</label>
+                    <input type="text" id="price" placeholder="Enter price">
+                </li>
+                <li>
+                    <label for="status">Status</label>
+                    <select name="category" id="select" class="form-control">
+                        <option>Active</option>
+                        <option>Inactive</option>
+                    </select>
+                </li>
+                <li>
+                    <input type="button" name="Submit" id="form-btn" class="form-control" value="Create Food" onClick="Confirm(this.form)">
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
