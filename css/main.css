@@ -218,6 +218,50 @@ a.btn:hover {
     text-shadow: 2px 2px 8px #111;
 }
 
+.menu-cover {
+    height: 40vh;
+    width: 100%;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.05)), to(rgba(0, 0, 0, 0)));
+    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
+    padding: 20px 50px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+
+    margin: 0;
+    background: url("../img/salad.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    color: #0a0a0b;
+    overflow: hidden;
+}
+
+.menu-cover h1 {
+    font-size: 70px;
+    color: #fff;
+    text-align: center;
+    font-weight: 800;
+    text-shadow: 2px 2px 8px #111;
+}
+
+.menu-cover h2 {
+    font-family: Cormorant Garamond, serif;
+    font-size: 42px;
+    color: #fff;
+    text-align: center;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 40px;
+    text-shadow: 2px 2px 8px #111;
+}
+
 .flex-form input[type="submit"] {
     background: #ef3f5a;
     border: 1px solid #ef3f5a;
@@ -616,7 +660,6 @@ footer {
     color: #fff;
 }
 
-
 /*Styling for buttons*/
 
 .admin-button {
@@ -659,6 +702,30 @@ footer {
     opacity: 1;
     right: 0;
 }
+
+/*Menu Section*/
+.row {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.col {
+    flex: 1;
+    margin: .6em;
+    padding: .6em;
+    color: #fff;
+    background-color: #4b4b4b;
+}
+
+.title-col1 {
+    background-color: #1b100a;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 20px;
+    width: 100%;
+    display: inline-block;
+}
+
 
 /* ==========================================================================
    Helper classes
@@ -777,6 +844,14 @@ footer {
 
     header nav ul li a {
         line-height: 60px;
+    }
+
+    .header nav ul li.active {
+        color: #b6ad2b;
+    }
+
+    .header nav ul li:hover {
+        background: #b6ad2b;
     }
 
     .wrapper {
