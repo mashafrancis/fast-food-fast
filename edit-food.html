@@ -16,7 +16,7 @@
     <script src="./js/main.js"></script>
     <script type="text/javascript">
         function Confirm(form) {
-            alert("Food item created successfully!");
+            alert("Thank you for updating me. Now I'm yummy again!");
             form.submit();
         }
     </script>
@@ -70,9 +70,9 @@
 </div>
 <div class="main-content">
     <div class="title">
-        Add Food Item
-        <a href="add-food2.html">
-            <button class="admin-button"><i class="fas fa-plus"></i>&nbsp;  Add</button>
+        Edit Food Item
+        <a href="deleted.html">
+            <button class="admin-button"><i class="far fa-trash-alt"></i>&nbsp;Delete</button>
         </a>
     </div>
     <div class="wrapper-order">
@@ -80,16 +80,17 @@
             <ul class="flex-outer">
                 <li>
                     <label for="name">Name</label>
-                    <input type="text" id="name" placeholder="Enter the name of food">
+                    <input type="text" id="name" placeholder="Veg Hawaiian Salad">
                 </li>
                 <li>
                     <label for="description">Description</label>
-                    <textarea name="text" id="description" placeholder="Enter the food details..."></textarea>
+                    <textarea name="text" id="description" placeholder="Penne, pineapple tit-bits, parsleygreen bell peppers,
+tomatoes, lettuce and gherkins"></textarea>
                 </li>
                 <li>
                     <label for="category">Category</label>
                     <select name="category" id="category-food" class="form-control">
-                        <option>Select</option>
+                        <option>SALAD</option>
                         <option>PIZZA</option>
                         <option>PASTA</option>
                         <option>FRIES</option>
@@ -111,7 +112,7 @@
                 </li>
                 <li>
                     <label for="price">Price</label>
-                    <input type="text" id="price" placeholder="Enter price">
+                    <input type="text" id="price" placeholder="Ksh500">
                 </li>
                 <li>
                     <label for="status">Status</label>
@@ -121,8 +122,8 @@
                     </select>
                 </li>
                 <li>
-                    <input type="button" name="Submit" id="form-btn" class="form-control"
-                           value="Create Food" onClick="Confirm(this.form)">
+                    <input type="button" name="Submit" id="form-btn" class="form-control" value="EDIT DOOD"
+                           onClick="Confirm(this.form)">
                 </li>
             </ul>
         </form>
