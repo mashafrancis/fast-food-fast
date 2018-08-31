@@ -39,7 +39,7 @@ body {
     color: #1a0909;
 }
 
-.side-nav .logo {
+.profile-nav .logo {
     background-color: #1a0909;
     color: #fff;
 }
@@ -98,7 +98,7 @@ body {
 }
 
 /* side navigation styles */
-.side-nav {
+.profile-nav {
     position: absolute;
     width: 100%;
     height: 100vh;
@@ -107,22 +107,22 @@ body {
     display: none;
 }
 
-.side-nav.visible {
+.profile-nav.visible {
     display: block;
 }
 
-.side-nav ul {
+.profile-nav ul {
     margin: 0;
     padding: 0;
 }
 
-.side-nav ul li {
+.profile-nav ul li {
     padding: 16px 16px;
     border-bottom: 1px solid #3f2519;
     position: relative;
 }
 
-.side-nav ul li.active:before {
+.profile-nav ul li.active:before {
     content: '';
     position: absolute;
     width: 4px;
@@ -132,28 +132,28 @@ body {
     background-color: #c3c300;
 }
 
-.side-nav ul li.active {
+.profile-nav ul li.active {
     background: #3f2519;
 }
 
-.side-nav ul li:hover {
+.profile-nav ul li:hover {
     background: #3f2519;
 }
 
 
-.side-nav ul li a {
+.profile-nav ul li a {
     color: #fff;
     display: block;
     text-decoration: none;
 }
 
-.side-nav ul li i {
+.profile-nav ul li i {
     color: #c3c300;
     min-width: 20px;
     text-align: center;
 }
 
-.side-nav ul li span:nth-child(2) {
+.profile-nav ul li span:nth-child(2) {
     margin-left: 10px;
     font-size: 14px;
     font-weight: 600;
@@ -163,19 +163,16 @@ body {
 .main-content {
     padding: 40px;
     margin-top: 0;
-    padding: 0;
     padding-top: 44px;
     height: 100%;
     overflow: scroll;
 }
 
 .main-content .title {
-    background-color: #919100;
     border-bottom: 1px solid #b8bec9;
     padding: 10px 20px;
     font-weight: 700;
-    color: #dbdbdb;
-    font-size: 18px;
+    font-size: 24px;
 }
 
 /* set element styles to fit tablet and higher(desktop) */
@@ -197,29 +194,29 @@ body {
         background-color: #fff;
     }
 
-    .side-nav {
+    .profile-nav {
         display: block;
         width: 70px;
         z-index: 2;
     }
 
-    .side-nav ul li span:nth-child(2) {
+    .profile-nav ul li span:nth-child(2) {
         display: none;
     }
 
-    .side-nav .logo i {
+    .profile-nav .logo i {
         padding-left: 12px;
     }
 
-    .side-nav .logo span {
+    .profile-nav .logo span {
         display: none;
     }
 
-    .side-nav ul li i {
+    .profile-nav ul li i {
         font-size: 26px;
     }
 
-    .side-nav ul li a {
+    .profile-nav ul li a {
         text-align: center;
     }
 
@@ -230,27 +227,27 @@ body {
 
 /* set element styles for desktop */
 @media screen and (min-width: 800px) {
-    .side-nav {
+    .profile-nav {
         width: 200px;
     }
 
-    .side-nav ul li span:nth-child(2) {
+    .profile-nav ul li span:nth-child(2) {
         display: inline-block;
     }
 
-    .side-nav ul li i {
+    .profile-nav ul li i {
         font-size: 16px;
     }
 
-    .side-nav ul li a {
+    .profile-nav ul li a {
         text-align: left;
     }
 
-    .side-nav .logo i {
+    .profile-nav .logo i {
         padding-left: 0;
     }
 
-    .side-nav .logo span {
+    .profile-nav .logo span {
         display: inline-block;
     }
 
@@ -285,4 +282,38 @@ body {
     font-weight: 600;
 }
 
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+}
+
+.title {
+    color: grey;
+    font-size: 18px;
+}
+
+button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+}
+
+a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+}
+
+button:hover, a:hover {
+    opacity: 0.7;
+}
 
