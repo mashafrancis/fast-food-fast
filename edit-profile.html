@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Profile</title>
+    <title>Edit Profile</title>
 
     <link rel="stylesheet" href="./css/profile.css">
     <link rel="stylesheet" href="./css/admin.css">
@@ -31,7 +31,7 @@
         <ul>
             <li class="active">
                 <a href="profile.html">
-                    <span><i class="fas fa-user"></i></span>
+                    <span><i class="fas fa-user-edit"></i></span>
                     <span>Profile</span>
                 </a>
             </li>
@@ -64,64 +64,52 @@
 </div>
 <div class="main-content">
     <div class="title">
-        Welcome Francis!
-        <a href="edit-profile.html">
-            <button class="admin-button"><i class="fas fa-user-edit"></i>&nbsp;Edit</button>
-        </a>
+        Edit your details
     </div>
 
     <div class="wrapper-order">
         <section>
             <div class="order">
                 <h4>Personal Details</h4>
-                <div class="table-responsive">
-                    <table class="table table-order-details table-styling">
-                        <tbody>
-                        <tr>
-                            <td>First Name</td>
-                            <td>Francis</td>
-                        </tr>
-                        <tr>
-                            <td>Last Name</td>
-                            <td>2018-08-29 05:57</td>
-                        </tr>
-                        <tr>
-                            <td>Email</td>
-                            <td>francis@test.com</td>
-                        </tr>
-                        <tr>
-                            <td>Last Login</td>
-                            <td>10 May 2018 6:00PM</td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <h4>Address</h4>
-                    <table class="table table-order-details">
-                        <tbody>
-                        <tr>
-                            <td>Phone</td>
-                            <td>0724234567</td>
-                        </tr>
-                        <tr>
-                            <td>City</td>
-                            <td>Nairobi</td>
-                        </tr>
-                        <tr>
-                            <td>Zipcode</td>
-                            <td>00515</td>
-                        </tr>
-                        <tr>
-                            <td>Address line 1</td>
-                            <td>012</td>
-                        </tr>
-                        <tr>
-                            <td>Address line 2</td>
-                            <td>123</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <form>
+                    <ul class="flex-outer">
+                        <li>
+                            <label for="first-name">First Name</label>
+                            <input type="text" id="first-name" placeholder="Francis">
+                        </li>
+                        <li>
+                            <label for="last-name">Last Name</label>
+                            <input type="text" id="last-name" placeholder="Masha">
+                        </li>
+                        <li>
+                            <label for="email">Email</label>
+                            <input type="text" id="email" placeholder="francis@test.com">
+                        </li>
+                        <li>
+                            <label for="address">Address</label>
+                            <input type="text" id="address" placeholder="501-00515">
+                        </li>
+                        <li>
+                            <label for="address">Address 2</label>
+                            <input type="text" id="address" placeholder="Enter your correct address">
+                        </li>
+                        <li>
+                            <label for="phone">Phone</label>
+                            <input type="text" id="phone" placeholder="0724234567">
+                        </li>
+                        <li>
+                            <label for="zipcode">Zip Code</label>
+                            <input type="text" id="zipcode" placeholder="Enter your zipcode">
+                        </li>
+                        <li>
+                            <label for="city">City</label>
+                            <input type="text" id="city" placeholder="Enter your city">
+                        </li>
+                        <li>
+                            <button type="submit"><a href="profile.html">Submit</a></button>
+                        </li>
+                    </ul>
+                </form>
             </div>
         </section>
     </div>

@@ -4,21 +4,28 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Dashboard</title>
+    <title>Order1024</title>
 
     <link rel="stylesheet" href="./css/admin.css">
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script src="./js/main.js"></script>
+    <script type="text/javascript">
+        function Confirm(form) {
+            alert("Thank you for updating me. Now I'm yummy again!");
+            form.submit();
+        }
+    </script>
 
 </head>
 <body>
 <div class="header">
     <div class="logo">
-        <span> Admin Dashboard</span>
+        <span>Fast Food Fast</span>
     </div>
     <a href="#" class="nav-trigger"><span></span></a>
 </div>
@@ -28,8 +35,8 @@
     </div>
     <nav>
         <ul>
-            <li class="active">
-                <a href="#">
+            <li>
+                <a href="admin-dashboard.html">
                     <span><i class="fas fa-home"></i></span>
                     <span>Dashboard</span>
                 </a>
@@ -46,7 +53,7 @@
                     <span>Orders</span>
                 </a>
             </li>
-            <li>
+            <li class="active">
                 <a href="food-item.html">
                     <span><i class="fas fa-utensils"></i></span>
                     <span>Food Section</span>
@@ -69,52 +76,14 @@
 </div>
 <div class="main-content">
     <div class="title">
-        Overview
+        Food has been removed completely!
+        <a href="food-item.html">
+            <button class="admin-button"><i class="fas fa-arrow-left"></i>&nbsp;Back</button>
+        </a>
     </div>
-
-    <div class="wrapper">
-        <section class="admin-links">
-            <a href="#">
-                <div class="admin-boxlink-square" id="category-1">
-                    <h3>28</h3>
-                    <p><i class="fas fa-utensils"></i> Orders Online</p>
-                </div>
-            </a>
-            <a href="#">
-                <div class="admin-boxlink-rectangle" id="category-2">
-                    <h3>75</h3>
-                    <p><i class="fas fa-coins"></i> Sales Today</p>
-                </div>
-            </a>
-            <a href="#">
-                <div class="admin-boxlink-square" id="category-3">
-                    <h3>10</h3>
-                    <p><i class="far fa-user"></i> Users Online</p>
-                </div>
-            </a>
-            <a href="#">
-                <div class="admin-boxlink-rectangle" id="category-4">
-                    <h3>50,000</h3>
-                    <p><i class="far fa-money-bill-alt"></i> Sales Total</p>
-                </div>
-            </a>
-            <a href="#">
-                <div class="admin-boxlink-square" id="category-5">
-                    <h3>31</h3>
-                    <p><i class="fas fa-address-book"></i> Orders Total</p>
-                </div>
-            </a>
-            <a href="#">
-                <div class="admin-boxlink-square" id="category-6">
-                    <h3>500</h3>
-                    <p><i class="fas fa-users"></i> Users Total</p>
-                </div>
-            </a>
-        </section>
+    <div class="wrapper-order">
     </div>
-
 </div>
-
 
 </body>
 </html>
