@@ -584,7 +584,7 @@ footer {
 }
 
 .container-2 {
-    width: 80%;
+    width: 100%;
     max-width: 1170px;
     margin: 0 auto;
     overflow: hidden;
@@ -617,7 +617,24 @@ footer {
 
 .wrapper-2 h3 {
     text-align: center;
-    font-size: 36px;
+    font-size: 30px;
+    line-height: 1px;
+}
+
+.wrapper-2 p a {
+    color: #006565;
+    font-weight: 500;
+}
+
+.img-container {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
+
+img.avatar {
+    width: 25%;
+    border-radius: 50%;
 }
 
 /*User Pages*/
