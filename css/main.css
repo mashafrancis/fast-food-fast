@@ -199,22 +199,14 @@ a.btn:hover {
     overflow: hidden;
 }
 
-.cover h1 {
-    font-size: 70px;
-    color: #fff;
-    text-align: center;
-    font-weight: 800;
-    text-shadow: 2px 2px 8px #111;
-}
-
 .cover h2 {
     font-family: Cormorant Garamond, serif;
-    font-size: 42px;
+    font-size: 28px;
     color: #fff;
     text-align: center;
     font-weight: 300;
     font-style: italic;
-    line-height: 40px;
+    line-height: 36px;
     text-shadow: 2px 2px 8px #111;
 }
 
@@ -703,30 +695,6 @@ footer {
     right: 0;
 }
 
-/*Menu Section*/
-.row {
-    display: flex;
-    flex-flow: column wrap;
-}
-
-.col {
-    flex: 1;
-    margin: .6em;
-    padding: .6em;
-    color: #fff;
-    background-color: #4b4b4b;
-}
-
-.title-col1 {
-    background-color: #1b100a;
-    color: #fff;
-    font-size: 18px;
-    padding: 10px 20px;
-    width: 100%;
-    display: inline-block;
-}
-
-
 /* ==========================================================================
    Helper classes
    ========================================================================== */
@@ -846,7 +814,7 @@ footer {
         line-height: 60px;
     }
 
-    .header nav ul li.active {
+    .header nav ul li .active {
         color: #b6ad2b;
     }
 
@@ -854,9 +822,14 @@ footer {
         background: #b6ad2b;
     }
 
-    .wrapper {
+    .cover h2 {
+        font-size: 40px;
+    }
+
+    .wrapper-main {
         width: 1000px;
         margin: 0 auto;
+        overflow: scroll;
     }
 
     .index-links {

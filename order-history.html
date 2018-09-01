@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile</title>
+
+    <link rel="stylesheet" href="./css/admin.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="./js/main.js"></script>
+
+</head>
+<body>
+<div class="header">
+    <div class="logo">
+        <span>Fast Food Fast</span>
+    </div>
+    <a href="#" class="nav-trigger"><span></span></a>
+</div>
+<div class="side-nav">
+    <div class="logo">
+        <span>Fast Food Fast</span>
+    </div>
+    <nav>
+        <ul>
+            <li>
+                <a href="profile.html">
+                    <span><i class="fas fa-user"></i></span>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="order-history.html">
+                    <span><i class="fas fa-history"></i></span>
+                    <span>Order History</span>
+                </a>
+            </li>
+            <li>
+                <a href="reset-password.html">
+                    <span><i class="fas fa-unlock"></i></span>
+                    <span>Reset Password</span>
+                </a>
+            </li>
+            <li>
+                <a href="index.html">
+                    <span><i class="fas fa-sign-out-alt"></i></span>
+                    <span>Logout</span>
+                </a>
+            </li>
+            <li>
+                <a href="admin-login.html">
+                    <span><i class="fas fa-unlock-alt"></i></span>
+                    <span>Admin Mode</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="main-content">
+    <div class="title">
+        Orders Management
+    </div>
+
+    <div class="wrapper">
+        <section class="admin-links">
+            <table class="table table-borderless table-striped table-styling">
+                <thead>
+                <tr>
+                    <th>order ID</th>
+                    <th>item</th>
+                    <th>payed amount</th>
+                    <th>status</th>
+                    <th>date</th>
+                    <th>action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1024</td>
+                    <td>Fries</td>
+                    <td>Ksh1000</td>
+                    <td class="confirmed">Confirmed</td>
+                    <td>2018-08-29 05:57</td>
+                    <td><a href="order-1024.html"><i class="fas fa-edit"></i></a> &emsp;&emsp;<a href="Order1024.pdf"><i
+                            class="fas fa-download"></i></a></td>
+                </tr>
+                <tr>
+                    <td>1024</td>
+                    <td>Burger</td>
+                    <td>Ksh2000</td>
+                    <td class="delivered">Delivered</td>
+                    <td>2018-08-29 05:57</td>
+                    <td><a href="order-1024.html"><i class="fas fa-edit"></i></a> &emsp;&emsp;<a href="Order1024.pdf"><i
+                            class="fas fa-download"></i></a></td>
+                </tr>
+                <tr>
+                    <td>1024</td>
+                    <td>Burger</td>
+                    <td>Ksh2000</td>
+                    <td class="delivered">Delivered</td>
+                    <td>2018-08-29 05:57</td>
+                    <td><a href="order-1024.html"><i class="fas fa-edit"></i></a> &emsp;&emsp;<a href="Order1024.pdf"><i
+                            class="fas fa-download"></i></a></td>
+                </tr>
+                <tr>
+                    <td>1024</td>
+                    <td>Fries</td>
+                    <td>Ksh1000</td>
+                    <td class="declined">Declined</td>
+                    <td>2018-08-29 05:57</td>
+                    <td><a href="order-1024.html"><i class="fas fa-edit"></i></a> &emsp;&emsp;<a href="Order1024.pdf"><i
+                            class="fas fa-download"></i></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+</body>
+</html>
