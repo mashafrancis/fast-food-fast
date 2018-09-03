@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <link rel="icon" type="image" href="./img/favicon.ico">
 
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script src="./js/main.js"></script>
@@ -17,14 +18,21 @@
 </head>
 <body>
 <div class="header">
-    <div class="logo">
-        <span><a href="index.html">Fast Food Fast</a></span>
+    <div>
+        <a href="#" class="nav-trigger"><span></span></a>
     </div>
-    <a href="#" class="nav-trigger"><span></span></a>
+    <div class="logo">
+        <span><a href="index.html"><span class="highlight-2">Fast Food</span>Fast</a></span>
+    </div>
+    <div>
+        <a href="#"><i class="fas fa-envelope"></i></a>&ensp;&ensp;
+        <a href="checkout.html"><i class="fas fa-shopping-cart"></i></a>&ensp;&ensp;
+        <a href="profile.html"><img src="img/img_avatar.png" alt="Avatar" class="avatar-2"></a>
+    </div>
 </div>
 <div class="side-nav">
     <div class="logo">
-        <span><a href="index.html">Fast Food Fast</a></span>
+        <span><a href="index.html"><span class="highlight-2">Fast Food</span>Fast</a></span>
     </div>
     <nav>
         <ul>
@@ -70,6 +78,9 @@
 <div class="main-content">
     <div class="title">
         Fries Menu
+        <a href="checkout.html">
+            <button class="button">Checkout</button>
+        </a>
     </div>
 
     <div class="wrapper">
@@ -127,9 +138,14 @@
                 </tr>
                 </tbody>
             </table>
+            <div class="pagination">
+                <a href="#">Previous</a>
+                <a href="#">2</a>
+                <a class="active" href="#">3</a>
+                <a href="#">Next</a>
+            </div>
         </section>
     </div>
-
 </div>
 
 </body>

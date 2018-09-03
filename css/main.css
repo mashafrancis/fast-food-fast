@@ -113,6 +113,7 @@ a {
     text-decoration: none;
     cursor: pointer;
     opacity: 0.9;
+    font-weight: 700;
 }
 
 a:hover {
@@ -143,6 +144,10 @@ header {
     padding: 10px 100px 0;
 }
 
+header .header-brand {
+    font-size: 26px;
+}
+
 header nav ul {
     display: flex;
 }
@@ -159,6 +164,20 @@ header nav li:last-child {
     margin-right: 0;
 }
 
+header nav ul li a {
+    line-height: 2px;
+    font-weight: 400;
+}
+
+header nav ul li a:hover {
+    color: #009494;
+}
+
+.header-login {
+    color: #000;
+    font-size: 15px;
+}
+
 a.btn {
     color: #fff;
     padding: 10px;
@@ -166,6 +185,10 @@ a.btn {
     -webkit-transition: all 0.2s;
     -moz-transition: all 0.2s;
     transition: all 0.2s;
+}
+
+.highlight {
+    color: #00b0b0;
 }
 
 a.btn:hover {
@@ -208,10 +231,11 @@ a.btn:hover {
     font-style: italic;
     line-height: 36px;
     text-shadow: 2px 2px 8px #111;
+    font-stretch: condensed;
 }
 
 .menu-cover {
-    height: 40vh;
+    height: 50vh;
     width: 100%;
     background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.05)), to(rgba(0, 0, 0, 0)));
     background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0) 100%);
@@ -584,7 +608,7 @@ footer {
 }
 
 .container-2 {
-    width: 80%;
+    width: 100%;
     max-width: 1170px;
     margin: 0 auto;
     overflow: hidden;
@@ -617,7 +641,24 @@ footer {
 
 .wrapper-2 h3 {
     text-align: center;
-    font-size: 36px;
+    font-size: 30px;
+    line-height: 1px;
+}
+
+.wrapper-2 p a {
+    color: #006565;
+    font-weight: 500;
+}
+
+.img-container {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
+
+img.avatar {
+    width: 25%;
+    border-radius: 50%;
 }
 
 /*User Pages*/
@@ -784,9 +825,9 @@ footer {
 @media only screen and (min-width: 1000px) {
     /* Style adjustments for viewports that meet the condition */
     header .header-brand {
-        font-size: 24px;
+        font-size: 26px;
         font-weight: 600;
-        color: #111;
+        color: #d6d6d6;
         display: block;
         margin: 31px 0;
         text-align: center;
@@ -800,18 +841,16 @@ footer {
     header .header-brand {
         margin: 31px 0;
         text-align: left;
-        line-height: 38px;
-        padding: 0 20px 0 40px;
         float: left;
     }
 
     header nav ul {
-        margin: 20px 0 0 20px;
+        margin: 2px 0 0 2px;
         float: right;
     }
 
     header nav ul li a {
-        line-height: 60px;
+        line-height: 2px;
     }
 
     .header nav ul li .active {
@@ -820,6 +859,11 @@ footer {
 
     .header nav ul li:hover {
         background: #b6ad2b;
+    }
+
+    .header-login {
+        color: #f3f3f3;
+        font-size: 15px;
     }
 
     .cover h2 {
@@ -854,7 +898,7 @@ footer {
     }
 
     .index-links div h3 {
-        line-height: 230px;
+        line-height: 100px;
     }
 
     footer {
