@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/Bileonaire/Ride-My-Way.svg?branch=v3-update)](https://travis-ci.org/Bileonaire/Ride-My-Way)
-[![Coverage Status](https://coveralls.io/repos/github/Bileonaire/Ride-My-Way/badge.svg?branch=Develop-V3-API)](https://coveralls.io/github/Bileonaire/Ride-My-Way?branch=Develop-V3-API)
+[![Build Status](https://travis-ci.org/mashafrancis/fast-food-fast.svg?branch=develop)](https://travis-ci.org/mashafrancis/fast-food-fast)
+[![Coverage Status](https://coveralls.io/repos/github/mashafrancis/fast-food-fast/badge.svg?branch=develop)](https://coveralls.io/github/mashafrancis/fast-food-fast?branch=develop)
 [![PEP8](https://img.shields.io/badge/code%20style-pep8-green.svg)](https://www.python.org/dev/peps/pep-0008/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
