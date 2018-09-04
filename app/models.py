@@ -1,7 +1,7 @@
 """
 Handles data storage for all orders and users
 """
-ORDERS = []
+ORDERS = {}
 
 
 class Order:
