@@ -1,6 +1,8 @@
 """
 Handles data storage for all orders and users
 """
+from flask import make_response, jsonify
+
 all_orders = {}
 order_count = 1
 
@@ -64,16 +66,16 @@ class Order:
         """Gets all the orders saved"""
         return all_orders
 
-    @classmethod
-    def get_by_id(cls, order_id):
+    @staticmethod
+    def get_by_id(order_id):
         """Get a single order by its id"""
         return all_orders[order_id]
 
-    @classmethod
-    def delete(cls, order_id):
+    @staticmethod
+    def delete(order_id):
         """Deletes a single order"""
         try:
             del all_orders[order_id]
-            return {"message": "order successfully deleted"}
+            return make_response(jsonify({"message": "order successfully deleted"}), 200)
         except KeyError:
-            return {"message": "order does not exist"}
+            return make_response(jsonify({"message": "order does not exist"}), 404)

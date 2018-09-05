@@ -62,14 +62,11 @@ class Orders(Resource):
         """PUT request to update a particular order"""
         kwargs = self.reqparse.parse_args()
         result = Order.update(order_id, **kwargs)
-        if result != {"message": "order does not exist"}:
-            return make_response(jsonify(result), 200)
-        return make_response(jsonify(result), 404)
+        if result == {"message": "order does not exist"}:
+            return make_response(jsonify(result), 404)
+        return make_response(jsonify(result), 200)
 
     @staticmethod
     def delete(order_id):
         """DELETE request to remove a particular order"""
-        result = Order.delete(order_id)
-        if result != {"message": "order does not exist"}:
-            return make_response(jsonify(result), 200)
-        return make_response(jsonify(result), 404)
+        return Order.delete(order_id)
