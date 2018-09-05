@@ -17,6 +17,12 @@ class OrderTests(unittest.TestCase):
             "price": 500
         })
 
+        self.order2 = json.dumps({
+            "name": "Burger-2",
+            "quantity": "2",
+            "price": 500
+        })
+
     def test_create_order(self):
         """Test API can create an order (POST)"""
         response = self.client().post('/v1/orders', data=self.order,
@@ -27,6 +33,34 @@ class OrderTests(unittest.TestCase):
         """Tests API can get all orders (GET)"""
         response = self.client().get('/v1/orders')
         self.assertEqual(response.status_code, 200)
+
+    def test_get_order_by_id(self):
+        """Tests API can get one order by using its id"""
+        response = self.client().post('/v1/orders', data=self.order,
+                                      content_type='application/json')
+        self.assertEqual(response.status_code, 201)
+        result_in_json = json.loads(response.data.decode('utf-8').replace("'", "\""))
+        result = self.client().get('v1/orders/{}'.format(result_in_json['id']))
+        self.assertEqual(result.status_code, 200)
+
+    def test_order_can_be_edited(self):
+        """Test API can edit an existing order (PUT)"""
+        response = self.client().post('/v1/orders', data=self.order,
+                                      content_type='application/json')
+        self.assertEqual(response.status_code, 201)
+        response = self.client().put('/v1/orders/1', data=self.order2,
+                                     content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+    def test_order_deletion(self):
+        """Test API can delete and existing order (DELETE)"""
+        response = self.client().post('/v1/orders', data=self.order,
+                                      content_type='application/json')
+        self.assertEqual(response.status_code, 201)
+        response = self.client().delete('/v1/orders/1')
+        self.assertEqual(response.status_code, 200)
+        result = self.client().get('/v1/orders/1')
+        self.assertEqual(result.status_code, 404)
 
     def tearDown(self):
         with self.app.app_context():
