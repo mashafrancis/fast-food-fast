@@ -1,7 +1,8 @@
 """
 Handles data storage for all orders and users
 """
-ORDERS = {}
+all_orders = {}
+order_count = 1
 
 
 class Order:
@@ -14,7 +15,7 @@ class Order:
         self.quantity = quantity
         self.price = price
         self.status = "Pending"
-        self.order_id = len(ORDERS)+1
+        self.order_id = order_count
 
     def __repr__(self):
         return "<Order {}".format(self.order_id)
@@ -30,31 +31,49 @@ class Order:
 
     def save(self):
         """Creates an order and appends this information to orders dictionary"""
-        global ORDERS
+        global all_orders
+        global order_count
 
-        ORDERS[self.order_id] = {
+        all_orders[order_count] = {
             "order_id": self.order_id,
             "name": self.name,
             "quantity": self.quantity,
             "price": self.price,
             "status": self.status
         }
-        new_order = ORDERS[self.order_id]
+        new_order = all_orders[order_count]
+        order_count += 1
         return new_order
 
-    def update(self):
+    @classmethod
+    def update(cls, order_id, name, quantity, price, status):
         """Updates the order information"""
-        pass
+        if order_id in all_orders.keys():
+            all_orders[order_id] = {
+                "order_id": order_id,
+                "name": name,
+                "quantity": quantity,
+                "price": price,
+                "status": status
+            }
+            return all_orders[order_id]
+        return {"message": "order does not exist"}
 
     @staticmethod
     def get_all():
         """Gets all the orders saved"""
-        return ORDERS
+        return all_orders
 
-    def get_by_id(self):
+    @classmethod
+    def get_by_id(cls, order_id):
         """Get a single order by its id"""
-        next(filter(lambda x: x[self.order_id] == self.order_id, ORDERS), None)
+        return all_orders[order_id]
 
-    def delete(self):
-        global ORDERS
-        ORDERS.pop(self.order_id)
+    @classmethod
+    def delete(cls, order_id):
+        """Deletes a single order"""
+        try:
+            del all_orders[order_id]
+            return {"message": "order successfully deleted"}
+        except KeyError:
+            return {"message": "order does not exist"}

@@ -40,7 +40,7 @@ class OrderTests(unittest.TestCase):
                                       content_type='application/json')
         self.assertEqual(response.status_code, 201)
         result_in_json = json.loads(response.data.decode('utf-8').replace("'", "\""))
-        result = self.client().get('v1/orders/{}'.format(result_in_json['id']))
+        result = self.client().get('v1/orders/{}'.format(result_in_json['order_id']))
         self.assertEqual(result.status_code, 200)
 
     def test_order_can_be_edited(self):
@@ -64,7 +64,7 @@ class OrderTests(unittest.TestCase):
 
     def tearDown(self):
         with self.app.app_context():
-            models.ORDERS = {}
+            models.all_orders = {}
 
 
 if __name__ == '__main__':
