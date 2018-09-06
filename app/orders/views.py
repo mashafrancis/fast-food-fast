@@ -84,4 +84,3 @@ class Orders(Resource):
         if len(order) == 0:
             abort(404, 'Order {} not found!'.format(order_id))
         return order
-
