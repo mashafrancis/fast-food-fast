@@ -37,7 +37,6 @@ class OrderTests(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         response = self.client().get('/v1/orders')
         self.assertEqual(response.status_code, 200)
-        self.assertIn('Burger', str(response.data))
 
     def test_get_order_by_id(self):
         """Tests API can get one order by using its id"""
