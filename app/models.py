@@ -1,10 +1,21 @@
 """
 Handles data storage for all orders and users
 """
-from flask import make_response, jsonify
+from flask import make_response, jsonify, abort
+from flask_restful import fields
 
-all_orders = {}
 order_count = 1
+
+all_orders = []
+
+order_fields = {
+    'order_id': fields.Integer,
+    'name': fields.String,
+    'quantity': fields.Integer,
+    'price': fields.Float,
+    'status': fields.String,
+    'uri': fields.Url('orders')
+}
 
 
 class Order:
@@ -33,9 +44,6 @@ class Order:
 
     def save(self):
         """Creates an order and appends this information to orders dictionary"""
-        global all_orders
-        global order_count
-
         all_orders[order_count] = {
             "order_id": self.order_id,
             "name": self.name,
@@ -64,18 +72,19 @@ class Order:
     @staticmethod
     def get_all():
         """Gets all the orders saved"""
-        return all_orders
+        return "The total number of orders are: {}".format(len(all_orders)), all_orders
 
     @staticmethod
     def get_by_id(order_id):
         """Get a single order by its id"""
-        return all_orders[order_id]
+        order = [order for order in all_orders if order['order_id'] == order_id]
+        if len(order) == 0:
+            abort(404, 'Order {} not found!'.format(order_id))
+        return order
 
     @staticmethod
     def delete(order_id):
         """Deletes a single order"""
-        try:
-            del all_orders[order_id]
-            return make_response(jsonify({"message": "order successfully deleted"}), 200)
-        except KeyError:
-            return make_response(jsonify({"message": "order does not exist"}), 404)
+        order = Order.get_by_id(order_id)
+        all_orders.remove(order[0])
+        return order

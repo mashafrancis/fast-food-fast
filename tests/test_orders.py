@@ -13,13 +13,13 @@ class OrderTests(unittest.TestCase):
 
         self.order = json.dumps({
             "name": "Burger",
-            "quantity": "2",
+            "quantity": 2,
             "price": 500
         })
 
         self.order2 = json.dumps({
             "name": "Burger-2",
-            "quantity": "2",
+            "quantity": 2,
             "price": 500
         })
 
@@ -44,10 +44,9 @@ class OrderTests(unittest.TestCase):
         response = self.client().post('/v1/orders', data=self.order,
                                       content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        result_in_json = json.loads(response.data.decode('utf-8').replace("'", "\""))
-        result = self.client().get('v1/orders/{}'.format(result_in_json['order_id']))
-        self.assertEqual(result.status_code, 200)
-        self.assertIn('Burger', str(result.data))
+        response = self.client().get('/v1/orders/1')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Burger', str(response.data))
 
     def test_order_can_be_edited(self):
         """Test API can edit an existing order (PUT)"""
@@ -73,8 +72,6 @@ class OrderTests(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
         response = self.client().delete('/v1/orders/1')
         self.assertEqual(response.status_code, 200)
-        result = self.client().get('/v1/orders/1')
-        self.assertEqual(result.status_code, 404)
 
     def test_delete_non_existing(self):
         """Test deleting an order that does not exist"""
