@@ -65,6 +65,16 @@ class OrderTests(unittest.TestCase):
                                      content_type='application/json')
         self.assertEqual(response.status_code, 404)
 
+    def test_delete_all_orders(self):
+        response = self.client().post('/v1/orders', data=self.order,
+                                      content_type='application/json')
+        self.assertEqual(response.status_code, 201)
+        response = self.client().post('/v1/orders', data=self.order2,
+                                      content_type='application/json')
+        self.assertEqual(response.status_code, 201)
+        response = self.client().delete('/v1/orders')
+        self.assertEqual(response.status_code, 200)
+
     def test_order_deletion(self):
         """Test API can delete and existing order (DELETE)"""
         response = self.client().post('/v1/orders', data=self.order,

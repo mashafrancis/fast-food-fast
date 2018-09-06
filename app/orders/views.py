@@ -1,4 +1,4 @@
-from flask import Blueprint, abort
+from flask import abort
 from flask_restful import Resource, Api, reqparse, marshal
 
 from app.models import Order, all_orders, order_fields
@@ -34,6 +34,14 @@ class OrderList(Resource):
         return {'status': 'your order successfully added',
                 'order': marshal(order, order_fields)}, 201
 
+    @staticmethod
+    def delete():
+        if len(all_orders) == 0:
+            return {'message': 'No orders available!'}
+        else:
+            all_orders.clear()
+            return {'status': 'all your orders have been successfully deleted'}
+
 
 class Orders(Resource):
     def __init__(self):
@@ -56,10 +64,8 @@ class Orders(Resource):
             abort(404, 'Order {} not found!'.format(order_id))
         order = order[0]
         args = self.reqparse.parse_args()
-        for k, v in args.items():
-            if v is not None:
-                order[k] = v
-            return {'order': marshal(order, order_fields)}, 200
+        order.update(args)
+        return {'order': marshal(order, order_fields)}, 200
 
     @staticmethod
     def delete(order_id):
@@ -69,8 +75,3 @@ class Orders(Resource):
         return {'status': 'success',
                 'message': 'the order has been removed successfully'}, 200
 
-
-orders_api = Blueprint('resources.orders', __name__)
-api = Api(orders_api)
-api.add_resource(OrderList, '/v1/orders', endpoint='orders')
-api.add_resource(Orders, '/v1/orders/<int:order_id>', endpoint='order')
