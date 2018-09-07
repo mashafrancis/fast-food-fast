@@ -1,0 +1,1 @@
+web: gunicorn fast-food-fast:app
