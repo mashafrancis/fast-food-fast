@@ -10,8 +10,8 @@ all_orders = []
 order_fields = {
     'order_id': fields.Integer,
     'name': fields.String,
-    'quantity': fields.Integer,
-    'price': fields.Float,
+    'quantity': fields.String,
+    'price': fields.String,
     'status': fields.String,
     'uri': fields.Url('orders')
 }
