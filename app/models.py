@@ -3,6 +3,9 @@ Handles data storage for all orders and users
 """
 from flask_restful import fields, marshal
 
+all_users = {}
+user_count = 1
+
 order_count = 1
 
 all_orders = []
@@ -17,10 +20,16 @@ order_fields = {
 }
 
 
+class User(object):
+    """This contains methods for the users"""
+    pass
+
+
 class Order(object):
     """
     This contains the methods to add, update and delete an order
     """
+
     def save(self):
         """Creates an order and appends this information to orders dictionary"""
         pass
