@@ -13,7 +13,6 @@ Flask==1.0.2
 Flask-API==1.0
 Flask-RESTful==0.3.6
 flask-restplus==0.11.0
-gunicorn==19.8.1
 idna==2.7
 isort==4.3.4
 itsdangerous==0.24
@@ -35,5 +34,6 @@ PyYAML==3.13
 requests==2.19.1
 six==1.11.0
 urllib3==1.23
+waitress==1.1.0
 Werkzeug==0.14.1
 wrapt==1.10.11
