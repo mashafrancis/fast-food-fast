@@ -1,1 +1,1 @@
-web: gunicorn fast-food-fast:app
+web: gunicorn run:app
