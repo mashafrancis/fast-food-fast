@@ -1,9 +1,10 @@
+import os
+
 from flasgger import Swagger
-from flask import Flask
 
 from app import create_app
 
-app = Flask(__name__)
+app = create_app('production')
 swagger = Swagger(app)
 
 
@@ -91,4 +92,6 @@ def delete_ride():
     """
 
 
-app.run(debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get('PORT', 5000))
+    app.run('0.0.0.0', port=port)
