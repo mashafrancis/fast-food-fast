@@ -92,6 +92,12 @@ def delete_ride():
     """
 
 
+@app.route('/')
+def hello_world():
+    """test that flask app is running"""
+    return "To view the docs visit: https://masha-fast-food.herokuapp.com/apidocs"
+
+
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run('0.0.0.0', port=port)
