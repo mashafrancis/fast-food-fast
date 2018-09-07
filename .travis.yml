@@ -5,13 +5,12 @@ python:
 
 install:
   - pip install -r requirements.txt
-  - pip install coveralls
 
 before_script:
   - source ./.travis.sh
 
 script:
-  - nosetests  --with-coverage --cover-package=resources
+  - nosetests  --with-coverage
 
 after_success:
   - coveralls
