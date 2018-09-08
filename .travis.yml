@@ -11,7 +11,7 @@ before_script:
   - source ./.travis.sh
 
 script:
-  - nosetests -sv tests --with-coverage app/ instance/
+  - python -m pytest --cov-report term-missing --cov=resources
 
 after_success:
   - coveralls
