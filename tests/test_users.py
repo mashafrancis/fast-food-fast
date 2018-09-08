@@ -1,5 +1,8 @@
 import json
+import os
+import sys
 import unittest
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from .base_test import BaseTests
 
@@ -9,146 +12,103 @@ class UsersTest(BaseTests):
 
     def test_user_registration_successful(self):
         """Test successful user registration"""
-        response = self.client().post('/auth/register', data=self.user_reg)
+        response = self.client().post('/v1/auth/register', data=self.user_reg,
+                                      content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertIn('test@gmail.com', str(response.data))
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], u"User test@gmail.com successfully registered")
 
-    def test_same_email_registration(self):
-        """Test duplicate email registration"""
-        response = self.client().post('/auth/register', data=self.user_reg)
-        self.assertEqual(response.status_code, 201)
-        self.assertIn('test@gmail.com', str(response.data))
-        response = self.client().post('/auth/register',
-                                      data={
-                                          'username': 'blah',
-                                          'email': 'test@gmail.com',
-                                          'password': 'pie1#Moon',
-                                          'repeat_password': 'pie1#Moon'
-                                      })
-        self.assertEqual(response.status_code, 409)
-
-    def test_register_username_unique(self):
-        """Test a unique username"""
-        response = self.client().post('/auth/register', data=self.user_reg)
-        self.assertEqual(response.status_code, 201)
-        self.assertIn('test@gmail.com', str(response.data))
-        response = self.client().post('/auth/register',
-                                      data={
-                                          'username': 'test',
-                                          'email': 'blah@gmail.com',
-                                          'password': 'pie1#Moon',
-                                          'repeat_password': 'pie1#Moon'
-                                      })
-        self.assertEqual(response.status_code, 409)
-
     def test_register_invalid_email(self):
         """Test unsuccessful registration due to invalid email"""
-        response = self.client().post('/auth/register',
-                                      data={
-                                          'username': 'test',
-                                          'email': 'test',
-                                          'password': 'Moonpie1#',
-                                          'repeat_password': 'Moonpie1#'
-                                      })
+        data = json.dumps({
+            'username': 'test', 'email': 'test',
+            'password': 'Moonpie1#', 'confirm_password': 'Moonpie1#'})
+        data2 = json.dumps({
+            'username': 'test', 'email': '',
+            'password': 'Moonpie1#', 'confirm_password': 'Moonpie1#'})
+        response = self.client().post('/v1/auth/register',
+                                      data=data, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
         self.assertEqual(
             result['message'],
             u"Your email is invalid! Kindly provide use with the right email address format")
 
-        response = self.client().post('/auth/register',
-                                      data={
-                                          'username': 'test',
-                                          'email': '',
-                                          'password': 'Moonpie1#',
-                                          'repeat_password': 'Moonpie1#'
-                                      })
+        response = self.client().post('/v1/auth/register',
+                                      data=data2, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
         self.assertEqual(
             result['message'],
-            u"Kindly provide use with your email!")
+            u"Please provide email!")
 
     def test_register_invalid_username(self):
         """Test unsuccessful registration due to invalid username"""
-        response = self.client().post('/auth/register',
-                                      data={
-                                          'username': '11',
-                                          'email': 'test@gmail.com',
-                                          'password': 'Moonpie1#',
-                                          'repeat_password': 'Moonpie1#'
-                                      })
+        data = json.dumps({
+            'username': '11', 'email': 'test@gmail.com',
+            'password': 'Moonpie1#', 'confirm_password': 'Moonpie1#'})
+        data2 = json.dumps({
+            'username': '', 'email': 'test@gmail.com',
+            'password': 'Moonpie1#', 'confirm_password': 'Moonpie1#'})
+        response = self.client().post('/v1/auth/register',
+                                      data=data, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
         self.assertEqual(
             result['message'],
             u"Username must contain at least 1 letter and other characters with a minimum length of 4")
 
-        response = self.client().post('/auth/register',
-                                      data={
-                                          'username': '',
-                                          'email': 'test@gmail.com',
-                                          'password': 'Moonpie1#',
-                                          'repeat_password': 'Moonpie1#'
-                                      })
+        response = self.client().post('/v1/auth/register',
+                                      data=data2, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
         self.assertEqual(
             result['message'],
-            u"Please provide a username!")
+            u"Please provide username!")
 
     def test_register_invalid_password(self):
         """Test unsuccessful registration due to invalid password"""
-        response = self.client().post('/auth/register',
-                                      data={
-                                          'username': 'test',
-                                          'email': 'test@gmail.com',
-                                          'password': 'foo',
-                                          'repeat_password': 'foo'
-                                      })
+        data = json.dumps({
+            'username': 'test', 'email': 'test@gmail.com',
+            'password': 'foo', 'confirm_password': 'foo'})
+        data2 = json.dumps({
+            'username': 'test', 'email': 'test@gmail.com',
+            'password': '', 'confirm_password': ''})
+        response = self.client().post('/v1/auth/register',
+                                      data=data, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
         self.assertEqual(
             result['message'],
             u"Password must contain: lowercase letters, at least a digit, and a min-length of 6")
 
-        response = self.client().post('/auth/register',
-                                      data={
-                                          'username': 'test',
-                                          'email': 'test@gmail.com',
-                                          'password': '',
-                                          'repeat_password': ''
-                                      })
+        response = self.client().post('/v1/auth/register',
+                                      data=data2, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
         self.assertEqual(
             result['message'],
-            u"Please provide a password!")
+            u"Please provide password!")
 
     def test_register_confirmation_password(self):
         """Test unsuccessful registration due to empty confirmation password"""
-        response = self.client().post('/auth/register',
-                                      data={
-                                          'username': 'test',
-                                          'email': 'test@gmail.com',
-                                          'password': 'moonpie1#',
-                                          'repeat_password': ''
-                                      })
+        data = json.dumps({
+            'username': 'test', 'email': 'test@gmail.com',
+            'password': 'moonpie1#', 'confirm_password': ''})
+        data2 = json.dumps({
+            'username': 'test', 'email': 'test@gmail.com',
+            'password': 'moonpie1#', 'confirm_password': 'moonpie1'})
+        response = self.client().post('/v1/auth/register',
+                                      data=data, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
         self.assertEqual(
             result['message'],
-            u"Kindly confirm your password!")
+            u"Please provide password!")
 
-        response = self.client().post('/auth/register',
-                                      data={
-                                          'username': 'test',
-                                          'email': 'test@gmail.com',
-                                          'password': 'moonpie1#',
-                                          'repeat_password': 'moonpie1'
-                                      })
+        response = self.client().post('/v1/auth/register',
+                                      data=data2, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
         self.assertEqual(

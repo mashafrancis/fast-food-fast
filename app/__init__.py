@@ -15,6 +15,9 @@ def create_app(config_name):
 
     Swagger(app, template=template)
 
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint)
+
     api.add_resource(OrderList, '/v1/orders')
     api.add_resource(Orders, '/v1/orders/<int:order_id>')
 

@@ -1,10 +1,19 @@
 """
 Handles data storage for all orders and users
 """
+from flask import jsonify, request
 from flask_restful import fields, marshal
+from werkzeug.security import generate_password_hash, check_password_hash
 
-all_users = {}
-user_count = 1
+users = {1: {
+    "user_id": "1",
+    "username": "admin",
+    "email": "admin@gmail.com",
+    "password": generate_password_hash("admin1234", method='sha256')}}
+
+all_users = []
+
+user_count = 2
 
 order_count = 1
 
@@ -22,7 +31,59 @@ order_fields = {
 
 class User(object):
     """This contains methods for the users"""
-    pass
+    def __init__(self, username, email, password, confirm_password):
+        self.username = username
+        self.email = email
+        self.password = password
+        self.confirm_password = confirm_password
+        self.user_id = len(all_orders) + 1
+
+    def json(self):
+        return {
+            "user_id": self.user_id,
+            "username": self.username,
+            "email": self.email,
+            "password": self.password
+        }
+
+    @staticmethod
+    def add_one():
+        """Adds user to the list"""
+        user = {'username': request.json['username'],
+                'email': request.json['email'],
+                'password': request.json['password']}
+        all_users.append(user)
+        return jsonify({'users': all_users})
+
+    @staticmethod
+    def get_all():
+        """Gets all users"""
+        return jsonify({'users': all_users})
+
+    @staticmethod
+    def get_one(user_id):
+        """Filter different queries"""
+        user = [user for user in all_users if user['user_id'] == user_id]
+        return jsonify({'user': user[0]})
+
+    @staticmethod
+    def filter_by_username(username):
+        return [user for user in all_users if user['username'] == username]
+
+    @staticmethod
+    def filter_by_email(email):
+        return [user for user in all_users if user['email'] == email]
+
+    def delete(self):
+        """Deletes a user"""
+        pass
+
+    def verify_password(self, password):
+        """Validates password during login"""
+        return check_password_hash(self.password, password)
+
+    def __repr__(self):
+        return "<User: {}".format(self.username)
 
 
 class Order(object):
