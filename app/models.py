@@ -5,15 +5,13 @@ from flask import jsonify, request
 from flask_restful import fields, marshal
 from werkzeug.security import generate_password_hash, check_password_hash
 
-users = {1: {
+
+all_users = [{
     "user_id": "1",
     "username": "admin",
     "email": "admin@gmail.com",
-    "password": generate_password_hash("admin1234", method='sha256')}}
-
-all_users = []
-
-user_count = 2
+    "password": generate_password_hash("admin1234", method='sha256')}
+]
 
 order_count = 1
 
@@ -40,7 +38,6 @@ class User(object):
 
     def json(self):
         return {
-            "user_id": self.user_id,
             "username": self.username,
             "email": self.email,
             "password": self.password
@@ -49,7 +46,8 @@ class User(object):
     @staticmethod
     def add_one():
         """Adds user to the list"""
-        user = {'username': request.json['username'],
+        user = {'user_id': len(all_users) + 1,
+                'username': request.json['username'],
                 'email': request.json['email'],
                 'password': request.json['password']}
         all_users.append(user)
@@ -58,25 +56,27 @@ class User(object):
     @staticmethod
     def get_all():
         """Gets all users"""
-        return jsonify({'users': all_users})
+        return all_users
 
-    @staticmethod
-    def get_one(user_id):
+    @classmethod
+    def filter_by_id(cls, user_id):
         """Filter different queries"""
-        user = [user for user in all_users if user['user_id'] == user_id]
-        return jsonify({'user': user[0]})
+        return [user for user in all_users if user['user_id'] == user_id]
 
-    @staticmethod
-    def filter_by_username(username):
+    @classmethod
+    def filter_by_username(cls, username):
         return [user for user in all_users if user['username'] == username]
 
-    @staticmethod
-    def filter_by_email(email):
+    @classmethod
+    def filter_by_email(cls, email):
         return [user for user in all_users if user['email'] == email]
 
-    def delete(self):
+    @staticmethod
+    def delete(user_id):
         """Deletes a user"""
-        pass
+        user = User.filter_by_id(user_id)
+        all_users.remove(user[0])
+        return user
 
     def verify_password(self, password):
         """Validates password during login"""

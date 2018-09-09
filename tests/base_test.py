@@ -40,12 +40,12 @@ class BaseTests(unittest.TestCase):
             'confirm_password': 'pie1#Moon'
         })
 
-    def register(self, email, password, confirm_password):
-        return self.app.post(
-            '/v1/auth/register',
-            data=dict(email=email, password=password, confirm_password=confirm_password),
-            follow_redirects=True
-        )
+        self.user_same_username = json.dumps({
+            'username': 'test',
+            'email': 'blah@gmail.com',
+            'password': 'pie1#Moon',
+            'confirm_password': 'pie1#Moon'
+        })
 
     def tearDown(self):
         with self.app.app_context():

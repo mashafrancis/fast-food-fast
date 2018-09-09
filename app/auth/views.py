@@ -4,7 +4,7 @@ import requests
 from flask import request, jsonify, make_response
 
 from app.auth import auth
-from app.models import User
+from app.models import User, all_users
 
 
 @auth.route('/v1/auth/register', methods=['POST', 'GET'])
@@ -52,33 +52,34 @@ def register():
                     response = {'message': 'User {} successfully registered'.format(user.email)}
                     return make_response(jsonify(response)), 201
                 else:
-                    response = {'message': 'User with that username already exist.'}
+                    response = {'message': 'User with that username already exist!'}
                     return make_response(jsonify(response)), 409
             else:
-                response = {'message': 'User with that email already exist.'}
+                response = {'message': 'User with that email already exist!'}
                 return make_response(jsonify(response)), 409
 
         else:
             if not username:
-                response = jsonify({'message': 'Please provide username!'})
-                response.status_code = 400
-                return response
+                return make_response(jsonify({'message': 'Please provide username!'}), 400)
+
             elif not email:
-                response = jsonify({'message': 'Please provide email!'})
-                response.status_code = 400
-                return response
+                return make_response(jsonify({'message': 'Please provide email!'}), 400)
+
             else:
-                response = jsonify({'message': 'Please provide password!'})
-                response.status_code = 400
-                return response
+                return make_response(jsonify({'message': 'Please provide password!'}), 400)
 
     else:
+        results = []
         users = User.get_all()
-        if users is None:
-            response = jsonify({'message': 'No users to display!'})
-            response.status_code = 404
-            return response
+        if users:
+            for users in users:
+                obj = {
+                    'email': users['email'],
+                    'password': users['password'],
+                    "user_id": users['user_id'],
+                    'username': users['username']
+                }
+                results.append(obj)
+            return make_response(jsonify(results), 200)
         else:
-            response = users
-            response.status_code = 200
-            return response
+            return make_response(jsonify({'message': 'No users to display!'}), 404)
