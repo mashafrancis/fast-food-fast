@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/mashafrancis/fast-food-fast.svg?branch=ft-rest-endpoints-160239260)](https://travis-ci.org/mashafrancis/fast-food-fast)
-[![Coverage Status](https://coveralls.io/repos/github/mashafrancis/fast-food-fast/badge.svg?branch=ft-rest-endpoints-160239260)](https://coveralls.io/github/mashafrancis/fast-food-fast?branch=ft-rest-endpoints-160239260)
+[![Build Status](https://travis-ci.org/mashafrancis/fast-food-fast.svg?branch=ft-user-endpoints-160349531)](https://travis-ci.org/mashafrancis/fast-food-fast)
+[![Coverage Status](https://coveralls.io/repos/github/mashafrancis/fast-food-fast/badge.svg?branch=ft-user-endpoints-160349531)](https://coveralls.io/github/mashafrancis/fast-food-fast?branch=ft-user-endpoints-160349531)
 [![PEP8](https://img.shields.io/badge/code%20style-pep8-green.svg)](https://www.python.org/dev/peps/pep-0008/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 

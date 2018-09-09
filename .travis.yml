@@ -11,7 +11,7 @@ before_script:
   - source ./.travis.sh
 
 script:
-  - nosetests -sv tests --with-coverage app/ instance/
+  - coverage run -m pytest -v
 
 after_success:
   - coveralls
