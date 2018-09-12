@@ -7,6 +7,10 @@ class Database:
         cls.content[collection].append(data)
 
     @classmethod
+    def remove_all(cls, collection):
+        cls.content[collection].clear()
+
+    @classmethod
     def remove(cls, collection, finder):    # lambda x: x['username'] != 'francis'
         cls.content[collection] = [x for x in cls.content[collection] if not finder(x)]
 

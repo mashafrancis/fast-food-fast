@@ -15,7 +15,7 @@ class Response:
         self.internal_server_error_status = 500
 
     @staticmethod
-    def orders(order):
+    def define_orders(order):
         """Return a dictionary of the orders object"""
         obj = {
             'order_id': order['order_id'],
@@ -25,6 +25,30 @@ class Response:
             'date_created': order['date_created'],
             'created_by': order['created_by'],
             'status': order['status']
+        }
+        return obj
+
+    @staticmethod
+    def define_single_orders(orders):
+        """Return a dictionary of the orders object"""
+        obj = {
+            'order_id': (orders['order_id'] for orders in orders),
+            'name': (orders['name'] for orders in orders),
+            'quantity': (orders['quantity'] for orders in orders),
+            'price': (orders['price'] for orders in orders),
+            'date_created': (orders['date_created'] for orders in orders),
+            'created_by': (orders['created_by'] for orders in orders),
+            'status': (orders['status'] for orders in orders)
+        }
+        return obj
+
+    @staticmethod
+    def define_users(user):
+        """Return a dictionary of the users object"""
+        obj = {
+            'user_id': user['user_id'],
+            'email': user['email'],
+            'password': user['password']
         }
         return obj
 

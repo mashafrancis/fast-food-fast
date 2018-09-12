@@ -166,6 +166,7 @@ class Orders(Savable):
                        self.created_by,
                        self.status)
         order.save_order()
+        return self.to_dict()
 
     @staticmethod
     def list_all_orders():
@@ -174,10 +175,14 @@ class Orders(Savable):
 
     @classmethod
     def find_by_id(cls, order_id):
-        finder = (lambda x: x['user_id'] == order_id)
+        finder = (lambda x: x['order_id'] == order_id)
         return Database.find_one(Orders.collection, finder)
 
     @staticmethod
     def delete(order_id):
-        finder = (lambda x: x['order_id'] != order_id)
+        finder = (lambda x: x['order_id'] == order_id)
         return Database.remove(Orders.collection, finder)
+
+    @staticmethod
+    def delete_all():
+        return Database.remove_all(Orders.collection)

@@ -5,11 +5,17 @@ from flask.views import MethodView
 
 from app.auth import auth
 from app.models import User
+from app.responses.responses import Error, Success, Response
 from app.utils import Utils
 
 
 class RegistrationView(MethodView):
     """This class-based view registers a new user and fetches all user."""
+    def __init__(self):
+        super().__init__()
+        self.error = Error()
+        self.success = Success()
+        self.response = Response()
 
     @staticmethod
     def post():
@@ -58,21 +64,17 @@ class RegistrationView(MethodView):
             else:
                 return make_response(jsonify({'message': 'Please provide password!'}), 400)
 
-    @staticmethod
-    def get():
+    def get(self):
         """API GET Requests for this view. Url ---> /v1/auth/register"""
         results = []
         users = User.list_all_users()
         if users:
             for users in users:
-                obj = {
-                    'email': users['email'],
-                    'password': users['password']
-                }
+                obj = self.response.define_users(users)
                 results.append(obj)
-            return make_response(jsonify(results), 200)
+            return self.success.complete_request(results)
         else:
-            return make_response(jsonify({'message': 'No users to display!'}), 404)
+            return self.error.not_found('No users to display!')
 
 
 class LoginView(MethodView):
