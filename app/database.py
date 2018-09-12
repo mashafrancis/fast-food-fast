@@ -3,21 +3,25 @@ class Database:
                'orders': []}
 
     @classmethod
-    def insert(cls, data):
-        cls.content['users'].append(data)
+    def insert(cls, collection, data):
+        cls.content[collection].append(data)
 
     @classmethod
-    def remove(cls, finder):    # lambda x: x['username'] != 'francis'
-        cls.content['users'] = [user for user in cls.content['users'] if not finder(user)]
+    def remove(cls, collection, finder):    # lambda x: x['username'] != 'francis'
+        cls.content[collection] = [x for x in cls.content[collection] if not finder(x)]
 
     @classmethod
-    def find(cls, finder):  # lambda x: x['username'] == 'francis'
-        return [user for user in cls.content['users'] if finder(user)]
+    def find_one(cls, collection, finder):  # lambda x: x['username'] == 'francis'
+        return [x for x in cls.content[collection] if finder(x)]
 
     @classmethod
-    def get_all_users(cls):
-        return cls.content['users']
+    def find_all(cls, collection):
+        return cls.content[collection]
 
     @classmethod
     def user_count(cls):
         return len(cls.content['users'])
+
+    @classmethod
+    def order_count(cls):
+        return len(cls.content['orders'])

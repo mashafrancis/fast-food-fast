@@ -1,45 +1,61 @@
-"""
-Handles data storage for all orders and users
-"""
-import jwt
 from datetime import datetime, timedelta
 
-from flask import jsonify, current_app
-from flask_restful import fields, marshal
-from werkzeug.security import generate_password_hash, check_password_hash
+import jwt
+from flask import current_app, jsonify, make_response
+from werkzeug.security import check_password_hash, generate_password_hash
 
-all_users = [{
-    "user_id": "1",
-    "username": "admin",
-    "email": "admin@gmail.com",
-    "password": generate_password_hash("admin1234")}]
-
-order_count = 1
-
-all_orders = []
-
-order_fields = {
-    'order_id': fields.Integer,
-    'name': fields.String,
-    'quantity': fields.String,
-    'price': fields.String,
-    'status': fields.String,
-    'uri': fields.Url('orders')
-}
+from app.database import Database
+from app.utils import Savable
 
 
-class User(object):
-    """This contains methods for the users"""
+class User(Savable):
+    collection = 'users'
 
-    def __init__(self, username, email, password, confirm_password):
-        self.username = username
+    def __init__(self, email, password):
         self.email = email
         self.password = generate_password_hash(password)
-        self.confirm_password = confirm_password
-        self.user_id = len(all_users) + 1
+        self.user_id = Database.user_count() + 1
 
     def __repr__(self):
-        return "<User: {}>".format(self.username)
+        return f'<User {self.email}>'
+
+    def to_dict(self):
+        return {
+            'user_id': self.user_id,
+            'email': self.email,
+            'password': self.password
+        }
+
+    def add_user(self):
+        """Adds user to the list"""
+        user = User(self.email,
+                    self.password)
+        user.save_user()
+
+    @staticmethod
+    def list_all_users():
+        users = Database.find_all(User.collection)
+        return users
+
+    @classmethod
+    def find_by_email(cls, email):
+        finder = (lambda x: x['email'] == email)
+        return Database.find_one(User.collection, finder)
+
+    @classmethod
+    def find_by_id(cls, user_id):
+        finder = (lambda x: x['user_id'] == user_id)
+        return Database.find_one(User.collection, finder)
+
+    @classmethod
+    def find_by_username(cls, username):
+        finder = (lambda x: x['username'] == username)
+        return Database.find_one(User.collection, finder)
+
+    @staticmethod
+    def delete(user_id):
+        finder = (lambda x: x['user_id'] != user_id)
+        return Database.remove(User.collection, finder)
 
     def validate_password(self, password):
         """Validate password during login."""
@@ -75,91 +91,93 @@ class User(object):
         except jwt.InvalidTokenError:
             return "Not Authorized.Please Register or Login"
 
-    def json(self):
+    def login(self, email, password):
+        """Login registered users"""
+        user = User.find_by_email(email)
+        if user:
+            if check_password_hash(self.password, password):
+                access_token = User.generate_token(self.user_id)
+                if access_token:
+                    response = {
+                        'message': 'You have logged in successfully.',
+                        'access_token': access_token.decode()
+                    }
+                    return make_response(jsonify(response)), 200
+            else:
+                response = jsonify({
+                    'message': 'Incorrect password!'})
+                response.status_code = 404
+                return response
+        else:
+            response = jsonify({
+                'message': 'Invalid email or password. Please try again!'})
+            response.status_code = 401
+            return response
+
+
+class Admin(User):
+    def __init__(self, username, password, access):
+        super(Admin, self).__init__(username, password)
+        self.access = access
+
+    def __repr__(self):
+        return f'<Admin {self.email}, access {self.access}>'
+
+    def to_dict(self):
         return {
-            "username": self.username,
-            "email": self.email,
-            "password": self.password
+            'password': self.password,
+            'access': self.access
         }
 
-    def add_one(self):
+
+class Orders(Savable):
+    collection = 'orders'
+
+    def __init__(self, order_id, name, quantity, price, date_created, created_by, status):
+        self.order_id = order_id
+        self.name = name
+        self.quantity = quantity
+        self.price = price
+        self.date_created = date_created
+        self.created_by = created_by
+        self.status = status
+
+    def __repr__(self):
+        return f'<Order {self.name}>'
+
+    def to_dict(self):
+        return {
+            'order_id': self.order_id,
+            'name': self.name,
+            'quantity': self.quantity,
+            'price': self.price,
+            'date_created': self.date_created,
+            'created_by': self.created_by,
+            'status': self.status
+        }
+
+    def add_order(self):
         """Adds user to the list"""
-        user = {'user_id': self.user_id,
-                'username': self.username,
-                'email': self.email,
-                'password': self.password}
-        all_users.append(user)
-        return jsonify({'users': all_users})
+        order = Orders(self.order_id,
+                       self.name,
+                       self.quantity,
+                       self.price,
+                       self.date_created,
+                       self.created_by,
+                       self.status)
+        order.save_order()
 
     @staticmethod
-    def get_all():
-        """Gets all users"""
-        return all_users
+    def list_all_orders():
+        users = Database.find_all(Orders.collection)
+        return users
 
     @classmethod
-    def filter_by_id(cls, user_id):
-        """Filter different queries"""
-        return [user for user in all_users if user['user_id'] == user_id]
-
-    @classmethod
-    def filter_by_username(cls, username):
-        return [user for user in all_users if user['username'] == username]
-
-    @classmethod
-    def filter_by_email(cls, email):
-        return [user for user in all_users if user['email'] == email]
-
-    @staticmethod
-    def delete(user_id):
-        """Deletes a user"""
-        user = User.filter_by_id(user_id)
-        all_users.remove(user[0])
-        return user
-
-    @staticmethod
-    def is_login_valid(email, password):
-        """
-        This method verifies that an email/password (sent from the site form) is valid
-        Checks that the email exists and password is correct
-        :param email: The user's email
-        :param password: The sha512 hashed password
-        :return: True if valid, False otherwise
-        """
-        # Password in sha512 -> pbkdf2_sha512
-        user = User.filter_by_email(email)
-        hash_password = (users['password'] for users in user)
-        if user:
-            check_password_hash(hash_password, password)
-        return True
-
-
-class Order(object):
-    """
-    This contains the methods to add, update and delete an order
-    """
-
-    def save(self):
-        """Creates an order and appends this information to orders dictionary"""
-        pass
-
-    @classmethod
-    def update(cls, order_id, name, quantity, price, status):
-        """Updates the order information"""
-        pass
-
-    @staticmethod
-    def get_all():
-        """Gets all the orders saved"""
-        return [marshal(order, order_fields) for order in all_orders]
-
-    @staticmethod
-    def get_by_id(order_id):
-        """Get a single order by its id"""
-        return [order for order in all_orders if order['order_id'] == order_id]
+    def find_by_id(cls, order_id):
+        finder = (lambda x: x['user_id'] == order_id)
+        return Database.find_one(Orders.collection, finder)
 
     @staticmethod
     def delete(order_id):
-        """Deletes a single order"""
-        order = Order.get_by_id(order_id)
-        all_orders.remove(order[0])
-        return order
+        finder = (lambda x: x['order_id'] != order_id)
+        return Database.remove(Orders.collection, finder)

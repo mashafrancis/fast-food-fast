@@ -18,8 +18,13 @@ class Utils:
 
 
 class Savable(metaclass=ABCMeta):
-    def save(self):
-        Database.insert(self.to_dict())
+    def save_user(self):
+        collection = 'users'
+        Database.insert(collection, self.to_dict())
+
+    def save_order(self):
+        collection = 'orders'
+        Database.insert(collection, self.to_dict())
 
     @abstractmethod
     def to_dict(self):

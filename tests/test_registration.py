@@ -3,7 +3,7 @@ import os
 import sys
 import unittest
 
-from app.users.user import User
+from app.models import User
 from .base_test import BaseTests
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))

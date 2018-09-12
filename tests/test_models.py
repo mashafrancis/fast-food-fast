@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash
 
-from app.users.user import User
+from app.models import User
 from .base_test import BaseTests
 
 

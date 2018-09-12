@@ -4,7 +4,7 @@ from flask import request, jsonify, make_response
 from flask.views import MethodView
 
 from app.auth import auth
-from app.users.user import User
+from app.models import User
 from app.utils import Utils
 
 
