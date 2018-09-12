@@ -3,11 +3,10 @@ import os
 import sys
 import unittest
 
-from app.models import User
+from app.users.user import User
+from .base_test import BaseTests
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from .base_test import BaseTests
 
 
 class UsersTest(BaseTests):
@@ -19,9 +18,8 @@ class UsersTest(BaseTests):
                                       content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertIn('test@gmail.com', str(response.data))
-        self.assertIsNotNone(User.filter_by_email('test@gmail.com'))
-        self.assertIsNotNone(User.filter_by_username('test'))
-        self.assertIsNotNone(User.filter_by_id(1))
+        self.assertIsNotNone(User.find_by_email('test@gmail.com'))
+        self.assertIsNotNone(User.find_by_id(1))
         result = json.loads(response.data.decode())
         self.assertEqual(result['message'], u"User test@gmail.com successfully registered")
 
@@ -37,25 +35,14 @@ class UsersTest(BaseTests):
         result = json.loads(response.data.decode())
         self.assertEqual(
             result['message'],
-            u"User with that email already exist!")
-
-        # Test unsuccessful registration due to same username
-        response = self.client().post('/v1/auth/register',
-                                      data=self.user_same_username, content_type='application/json')
-        self.assertEqual(response.status_code, 409)
-        result = json.loads(response.data.decode())
-        self.assertEqual(
-            result['message'],
-            u"User with that username already exist!")
+            u"User already exists! Please login.")
 
     def test_register_invalid_email(self):
         """Test unsuccessful registration due to invalid email"""
         data = json.dumps({
-            'username': 'test', 'email': 'test',
-            'password': 'Moonpie1#', 'confirm_password': 'Moonpie1#'})
+            'email': 'test', 'password': 'Moonpie1#', 'confirm_password': 'Moonpie1#'})
         data2 = json.dumps({
-            'username': 'test', 'email': '',
-            'password': 'Moonpie1#', 'confirm_password': 'Moonpie1#'})
+            'email': '', 'password': 'Moonpie1#', 'confirm_password': 'Moonpie1#'})
 
         response = self.client().post('/v1/auth/register',
                                       data=data, content_type='application/json')
@@ -73,38 +60,12 @@ class UsersTest(BaseTests):
             result['message'],
             u"Please provide email!")
 
-    def test_register_invalid_username(self):
-        """Test unsuccessful registration due to invalid username"""
-        data = json.dumps({
-            'username': '11', 'email': 'test@gmail.com',
-            'password': 'Moonpie1#', 'confirm_password': 'Moonpie1#'})
-        data2 = json.dumps({
-            'username': '', 'email': 'test@gmail.com',
-            'password': 'Moonpie1#', 'confirm_password': 'Moonpie1#'})
-        response = self.client().post('/v1/auth/register',
-                                      data=data, content_type='application/json')
-        self.assertEqual(response.status_code, 400)
-        result = json.loads(response.data.decode())
-        self.assertEqual(
-            result['message'],
-            u"Username must contain at least 1 letter and other characters with a minimum length of 4")
-
-        response = self.client().post('/v1/auth/register',
-                                      data=data2, content_type='application/json')
-        self.assertEqual(response.status_code, 400)
-        result = json.loads(response.data.decode())
-        self.assertEqual(
-            result['message'],
-            u"Please provide username!")
-
     def test_register_invalid_password(self):
         """Test unsuccessful registration due to invalid password"""
         data = json.dumps({
-            'username': 'test', 'email': 'test@gmail.com',
-            'password': 'foo', 'confirm_password': 'foo'})
+            'email': 'test@gmail.com', 'password': 'foo', 'confirm_password': 'foo'})
         data2 = json.dumps({
-            'username': 'test', 'email': 'test@gmail.com',
-            'password': '', 'confirm_password': ''})
+            'email': 'test@gmail.com', 'password': '', 'confirm_password': ''})
         response = self.client().post('/v1/auth/register',
                                       data=data, content_type='application/json')
         self.assertEqual(response.status_code, 400)
@@ -124,11 +85,9 @@ class UsersTest(BaseTests):
     def test_register_confirmation_password(self):
         """Test unsuccessful registration due to empty confirmation password"""
         data = json.dumps({
-            'username': 'test', 'email': 'test@gmail.com',
-            'password': 'moonpie1#', 'confirm_password': ''})
+            'email': 'test@gmail.com', 'password': 'moonpie1#', 'confirm_password': ''})
         data2 = json.dumps({
-            'username': 'test', 'email': 'test@gmail.com',
-            'password': 'moonpie1#', 'confirm_password': 'moonpie1'})
+            'email': 'test@gmail.com', 'password': 'moonpie1#', 'confirm_password': 'moonpie1'})
         response = self.client().post('/v1/auth/register',
                                       data=data, content_type='application/json')
         self.assertEqual(response.status_code, 400)
@@ -148,8 +107,7 @@ class UsersTest(BaseTests):
     def test_user_whitespace_passwords(self):
         """Tests unsuccessful registration due to whitespace passwords"""
         data = json.dumps({
-            'username': 'test', 'email': 'test@gmail.com',
-            'password': '       ', 'confirm_password': '       '})
+            'email': 'test@gmail.com', 'password': '       ', 'confirm_password': '       '})
         response = self.client().post('/v1/auth/register',
                                       data=data, content_type='application/json')
         self.assertEqual(response.status_code, 400)

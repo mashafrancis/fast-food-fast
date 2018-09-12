@@ -1,17 +1,18 @@
 """
 Handles data storage for all orders and users
 """
-from flask import jsonify, request
+import jwt
+from datetime import datetime, timedelta
+
+from flask import jsonify, current_app
 from flask_restful import fields, marshal
 from werkzeug.security import generate_password_hash, check_password_hash
-
 
 all_users = [{
     "user_id": "1",
     "username": "admin",
     "email": "admin@gmail.com",
-    "password": generate_password_hash("admin1234", method='sha256')}
-]
+    "password": generate_password_hash("admin1234")}]
 
 order_count = 1
 
@@ -29,12 +30,50 @@ order_fields = {
 
 class User(object):
     """This contains methods for the users"""
+
     def __init__(self, username, email, password, confirm_password):
         self.username = username
         self.email = email
-        self.password = password
+        self.password = generate_password_hash(password)
         self.confirm_password = confirm_password
-        self.user_id = len(all_orders) + 1
+        self.user_id = len(all_users) + 1
+
+    def __repr__(self):
+        return "<User: {}>".format(self.username)
+
+    def validate_password(self, password):
+        """Validate password during login."""
+        return check_password_hash(self.password, password)
+
+    @staticmethod
+    def generate_token(user_id):
+        """Generates authentication token."""
+        try:
+            payload = {
+                'exp': datetime.utcnow() + timedelta(minutes=60),
+                'iat': datetime.utcnow(),
+                'sub': user_id
+            }
+            # create byte string token using payload and secret key
+            jwt_string = jwt.encode(
+                payload,
+                current_app.config['SECRET'],
+                algorithm='HS256'
+            )
+            return jwt_string
+        except Exception as e:
+            return str(e)
+
+    @staticmethod
+    def decode_token(token):
+        """Decode the access token from the authorization."""
+        try:
+            payload = jwt.decode(token, current_app.config['SECRET'])
+            return payload['sub']
+        except jwt.ExpiredSignatureError:
+            return "Not Authorized please login!"
+        except jwt.InvalidTokenError:
+            return "Not Authorized.Please Register or Login"
 
     def json(self):
         return {
@@ -43,13 +82,12 @@ class User(object):
             "password": self.password
         }
 
-    @staticmethod
-    def add_one():
+    def add_one(self):
         """Adds user to the list"""
-        user = {'user_id': len(all_users) + 1,
-                'username': request.json['username'],
-                'email': request.json['email'],
-                'password': request.json['password']}
+        user = {'user_id': self.user_id,
+                'username': self.username,
+                'email': self.email,
+                'password': self.password}
         all_users.append(user)
         return jsonify({'users': all_users})
 
@@ -78,12 +116,21 @@ class User(object):
         all_users.remove(user[0])
         return user
 
-    def verify_password(self, password):
-        """Validates password during login"""
-        return check_password_hash(self.password, password)
-
-    def __repr__(self):
-        return "<User: {}".format(self.username)
+    @staticmethod
+    def is_login_valid(email, password):
+        """
+        This method verifies that an email/password (sent from the site form) is valid
+        Checks that the email exists and password is correct
+        :param email: The user's email
+        :param password: The sha512 hashed password
+        :return: True if valid, False otherwise
+        """
+        # Password in sha512 -> pbkdf2_sha512
+        user = User.filter_by_email(email)
+        hash_password = (users['password'] for users in user)
+        if user:
+            check_password_hash(hash_password, password)
+        return True
 
 
 class Order(object):

@@ -22,26 +22,23 @@ class BaseTests(unittest.TestCase):
         })
 
         self.user_reg = json.dumps({
-            'username': 'test',
             'email': 'test@gmail.com',
             'password': 'Moonpie1#',
             'confirm_password': 'Moonpie1#'
         })
 
-        self.user_logs = {
+        self.user_logs = json.dumps({
             'email': 'test@gmail.com',
             'password': 'Moonpie1#'
-        }
+        })
 
         self.user_same_email = json.dumps({
-            'username': 'blah',
             'email': 'test@gmail.com',
             'password': 'pie1#Moon',
             'confirm_password': 'pie1#Moon'
         })
 
         self.user_same_username = json.dumps({
-            'username': 'test',
             'email': 'blah@gmail.com',
             'password': 'pie1#Moon',
             'confirm_password': 'pie1#Moon'

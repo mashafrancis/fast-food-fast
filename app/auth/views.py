@@ -1,41 +1,37 @@
 import re
 
-import requests
 from flask import request, jsonify, make_response
+from flask.views import MethodView
 
 from app.auth import auth
-from app.models import User, all_users
+from app.users.user import User
+from app.utils import Utils
 
 
-@auth.route('/v1/auth/register', methods=['POST', 'GET'])
-def register():
-    """API POST and GET Requests"""
-    if request.method == 'POST':
+class RegistrationView(MethodView):
+    """This class-based view registers a new user and fetches all user."""
+
+    @staticmethod
+    def post():
+        """API POST Requests for this view. Url ---> /v1/auth/register"""
+
         data = request.get_json(force=True)
-        username = str(data['username']).lower()
         email = str(data['email']).lower()
         password = data['password']
         confirm_password = data['confirm_password']
 
-        if username and email and password and confirm_password:
-            if not re.match(r"(?=^.{3,}$)(?=.*[a-z])^[A-Za-z0-9_-]+( +[A-Za-z0-9_-]+)*$", username):
+        if email and password and confirm_password:
+            if not Utils.email_is_valid(email):
                 response = \
                     jsonify({'message':
-                             'Username must contain at least 1 letter and other characters with a minimum length of 4'})
-                response.status_code = 400
-                return response
-
-            if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email):
-                response = \
-                    jsonify({'message':
-                             'Your email is invalid! Kindly provide use with the right email address format'})
+                                 'Your email is invalid! Kindly provide use with the right email address format'})
                 response.status_code = 400
                 return response
 
             if not re.match(r"^(?=.*[a-z])(?=.*[0-9]){6}", password):
                 response = \
                     jsonify({'message':
-                            'Password must contain: lowercase letters, at least a digit, and a min-length of 6'})
+                                 'Password must contain: lowercase letters, at least a digit, and a min-length of 6'})
                 response.status_code = 400
                 return response
 
@@ -44,42 +40,67 @@ def register():
                 response.status_code = 400
                 return response
 
-            user = User.filter_by_email(email)
+            user = User.find_by_email(email)
             if not user:
-                if not User.filter_by_username(username):
-                    user = User(username=username, email=email, password=password, confirm_password=confirm_password)
-                    user.add_one()
-                    response = {'message': 'User {} successfully registered'.format(user.email)}
-                    return make_response(jsonify(response)), 201
-                else:
-                    response = {'message': 'User with that username already exist!'}
-                    return make_response(jsonify(response)), 409
+                user = User(email=email,
+                            password=password)
+                user.add_user()
+                response = {'message': 'User {} successfully registered'.format(user.email)}
+                return make_response(jsonify(response)), 201
             else:
-                response = {'message': 'User with that email already exist!'}
+                response = {'message': 'User already exists! Please login.'}
                 return make_response(jsonify(response)), 409
 
         else:
-            if not username:
-                return make_response(jsonify({'message': 'Please provide username!'}), 400)
-
-            elif not email:
+            if not email:
                 return make_response(jsonify({'message': 'Please provide email!'}), 400)
 
             else:
                 return make_response(jsonify({'message': 'Please provide password!'}), 400)
 
-    else:
+    @staticmethod
+    def get():
+        """API GET Requests for this view. Url ---> /v1/auth/register"""
         results = []
-        users = User.get_all()
+        users = User.list_all_users()
         if users:
             for users in users:
                 obj = {
                     'email': users['email'],
-                    'password': users['password'],
-                    "user_id": users['user_id'],
-                    'username': users['username']
+                    'password': users['password']
                 }
                 results.append(obj)
             return make_response(jsonify(results), 200)
         else:
             return make_response(jsonify({'message': 'No users to display!'}), 404)
+
+
+class LoginView(MethodView):
+    """This class-based view handles user login and access token generation"""
+
+    def post(self):
+        """API POST Requests for this view. Url ---> /v1/auth/login"""
+        try:
+            data = request.get_json(force=True)
+            password = data['password']
+            email = data['email']
+
+            u = User(email=email, password=password)
+            result = u.login(email, password)
+            return result
+        except Exception as e:
+            # Create a response containing a string error message
+            response = {'message': str(e)}
+            return make_response(jsonify(response)), 500
+
+
+registration_view = RegistrationView.as_view('register_view')
+login_view = LoginView.as_view('login_view')
+
+auth.add_url_rule('/v1/auth/register',
+                  view_func=registration_view,
+                  methods=['POST', 'GET'])
+
+auth.add_url_rule('/v1/auth/login',
+                  view_func=login_view,
+                  methods=['POST', 'GET'])
