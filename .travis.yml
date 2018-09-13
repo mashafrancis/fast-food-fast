@@ -11,7 +11,7 @@ before_script:
   - source ./.travis.sh
 
 script:
-  - coverage run -m pytest -v
+  - python -m pytest --cov-report term-missing --cov=resources
 
 after_success:
   - coveralls
