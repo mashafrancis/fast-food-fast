@@ -84,6 +84,7 @@ class UsersTest(BaseTests):
             result['error'],
             u"Your email is invalid! Kindly provide use with the right email address format")
 
+        # Test email not provided
         response = self.client().post('/v1/auth/register',
                                       data=data2, content_type='application/json')
         self.assertEqual(response.status_code, 400)
@@ -106,6 +107,7 @@ class UsersTest(BaseTests):
             result['error'],
             u"Password must contain: lowercase letters, at least a digit, and a min-length of 6")
 
+        # Test password not provided
         response = self.client().post('/v1/auth/register',
                                       data=data2, content_type='application/json')
         self.assertEqual(response.status_code, 400)
@@ -162,6 +164,36 @@ class UsersTest(BaseTests):
         self.assertEqual(response.status_code, 401)
         self.assertEqual(
             results['error'], u"User does not exist. Kindly register!")
+
+    def test_no_token_get_all(self):
+        """Test unauthorized to get all users without a token."""
+        response = self.client().get('/v1/users')
+        self.assertEqual(response.status_code, 401)
+
+    def test_invalid_token(self):
+        """Test token is not in use."""
+        self.client().post('/v1/auth/register', data=self.user_reg)
+        result = self.client().post('/v1/auth/login', data=self.user_logs)
+        access_token = json.loads(result.data.decode())['access_token']
+        self.client().post('/auth/logout',
+                           headers=dict(Authorization="Bearer " + access_token))
+        response = self.client().post('/orders',
+                                      headers=dict(Authorization="Bearer " + access_token),
+                                      data=self.order)
+        return response
+        results = json.loads(response.data.decode())
+        self.assertEqual(results['error'], u"No token provided!")
+
+    def test_header_without_token(self):
+        """Test header exists but it has no token."""
+        self.client().post('/auth/resister', data=self.user_reg)
+        result = self.client().post('/auth/login', data=self.user_logs)
+        response = self.client().post('/orders',
+                                      headers=dict(Authorization="Bearer "),
+                                      data=self.order)
+        return response
+        results = json.loads(response.data.decode())
+        self.assertEqual(results['error'], u"No access token!")
 
 
 if __name__ == '__main__':
