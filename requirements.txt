@@ -25,12 +25,13 @@ mistune==0.8.3
 more-itertools==4.3.0
 nose==1.3.7
 passlib==1.7.1
-pluggy==0.7.1
 py==1.6.0
 PyJWT==1.6.4
 pylint==2.1.1
 python-dotenv==0.9.1
 pytz==2018.5
+pytest==3.6.3
+pytest-cov==2.5.1
 PyYAML==3.13
 requests==2.19.1
 six==1.11.0
