@@ -10,15 +10,18 @@ class BaseTests(unittest.TestCase):
         self.client = self.app.test_client
 
         self.order = json.dumps({
-            "name": "Burger",
-            "quantity": 2,
-            "price": 500
+            'name': 'Burger',
+            'quantity': '10',
+            'price': '1000',
+            'created_by': 'Test'
         })
 
         self.order2 = json.dumps({
-            "name": "Burger-2",
-            "quantity": 2,
-            "price": 500
+            'name': 'Burger-2',
+            'quantity': '20',
+            'price': '2000',
+            'created_by': 'Test',
+            'status': 'Accepted'
         })
 
         self.user_reg = json.dumps({

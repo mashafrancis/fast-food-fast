@@ -29,20 +29,6 @@ class Response:
         return obj
 
     @staticmethod
-    def define_single_orders(orders):
-        """Return a dictionary of the orders object"""
-        obj = {
-            'order_id': (orders['order_id'] for orders in orders),
-            'name': (orders['name'] for orders in orders),
-            'quantity': (orders['quantity'] for orders in orders),
-            'price': (orders['price'] for orders in orders),
-            'date_created': (orders['date_created'] for orders in orders),
-            'created_by': (orders['created_by'] for orders in orders),
-            'status': (orders['status'] for orders in orders)
-        }
-        return obj
-
-    @staticmethod
     def define_users(user):
         """Return a dictionary of the users object"""
         obj = {
@@ -63,7 +49,8 @@ class Success(Response):
 
     def create_resource(self, resource):
         """ Creation of any Resource """
-        return make_response(resource), self.created_status
+        response = jsonify({"message": resource})
+        return make_response(response), self.created_status
 
 
 class Error(Response):

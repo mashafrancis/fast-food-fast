@@ -1,20 +1,21 @@
 from datetime import datetime, timedelta
 
 import jwt
-from flask import current_app, jsonify, make_response
-from werkzeug.security import check_password_hash, generate_password_hash
+from flask import current_app
+from passlib.handlers.pbkdf2 import pbkdf2_sha512
 
 from app.database import Database
-from app.utils import Savable
+from app.utils import Savable, Utils
 
 
 class User(Savable):
     collection = 'users'
 
-    def __init__(self, email, password):
+    def __init__(self, email, password, user_id, **kwargs):
+        super(User, self).__init__(**kwargs)
         self.email = email
-        self.password = generate_password_hash(password)
-        self.user_id = Database.user_count() + 1
+        self.password = password
+        self.user_id = user_id
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -29,7 +30,8 @@ class User(Savable):
     def add_user(self):
         """Adds user to the list"""
         user = User(self.email,
-                    self.password)
+                    Utils.hash_password(self.password),
+                    self.user_id)
         user.save_user()
 
     @staticmethod
@@ -57,9 +59,25 @@ class User(Savable):
         finder = (lambda x: x['user_id'] != user_id)
         return Database.remove(User.collection, finder)
 
-    def validate_password(self, password):
-        """Validate password during login."""
-        return check_password_hash(self.password, password)
+    @staticmethod
+    def hash_password(password):
+        """
+        Hashes the password using pbkdf2_sha512
+        :param password: The sha512 password from the login/register form
+        :return: A sha512 -> pbkdf2_sha512 encrypted password
+        """
+        return pbkdf2_sha512.hash(password)
+
+    @staticmethod
+    def check_hashed_password(password, hashed_password):
+        """
+        Checked that the password the user sent matches that of the database.
+        The database password is encrypted more than the user's password at the stage
+        :param password: sha512-ashed password
+        :param hashed_password: pbkdf2_sha512 encrypted password
+        :return: True if passwords match, False otherwise
+        """
+        return pbkdf2_sha512.verify(password, hashed_password)
 
     @staticmethod
     def generate_token(user_id):
@@ -90,29 +108,6 @@ class User(Savable):
             return "Not Authorized please login!"
         except jwt.InvalidTokenError:
             return "Not Authorized.Please Register or Login"
-
-    def login(self, email, password):
-        """Login registered users"""
-        user = User.find_by_email(email)
-        if user:
-            if check_password_hash(self.password, password):
-                access_token = User.generate_token(self.user_id)
-                if access_token:
-                    response = {
-                        'message': 'You have logged in successfully.',
-                        'access_token': access_token.decode()
-                    }
-                    return make_response(jsonify(response)), 200
-            else:
-                response = jsonify({
-                    'message': 'Incorrect password!'})
-                response.status_code = 404
-                return response
-        else:
-            response = jsonify({
-                'message': 'Invalid email or password. Please try again!'})
-            response.status_code = 401
-            return response
 
 
 class Admin(User):
