@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Drinks</title>
+
+    <link rel="stylesheet" href="./css/admin.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <link rel="icon" type="image" href="./img/favicon.ico">
+
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="./js/main.js"></script>
+
+</head>
+<body>
+<div class="header">
+    <div>
+        <a href="#" class="nav-trigger"><span></span></a>
+    </div>
+    <div class="logo">
+        <span><a href="index.html"><span class="highlight-2">Fast Food</span>Fast</a></span>
+    </div>
+    <div>
+        <a href="#"><i class="fas fa-envelope"></i></a>&ensp;&ensp;
+        <a href="checkout.html"><i class="fas fa-shopping-cart"></i></a>&ensp;&ensp;
+        <a href="profile.html"><img src="img/img_avatar.png" alt="Avatar" class="avatar-2"></a>
+    </div>
+</div>
+<div class="side-nav">
+    <div class="logo">
+        <span><a href="index.html"><span class="highlight-2">Fast Food</span>Fast</a></span>
+    </div>
+    <nav>
+        <ul>
+            <li>
+                <a href="menu.html">
+                    <span><i class="fas fa-bars"></i></span>
+                    <span>Burger</span>
+                </a>
+            </li>
+            <li>
+                <a href="drinks.html">
+                    <span><i class="fas fa-beer"></i></span>
+                    <span>Drinks</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="fries.html">
+                    <span><i class="fas fa-utensils"></i></i></span>
+                    <span>Fries</span>
+                </a>
+            </li>
+            <li>
+                <a href="pasta.html">
+                    <span><i class="fas fa-coffee"></i></span>
+                    <span>Pasta</span>
+                </a>
+            </li>
+            <li>
+                <a href="pizza.html">
+                    <span><i class="fab fa-codiepie"></i></span>
+                    <span>Pizza</span>
+                </a>
+            </li>
+            <li>
+                <a href="salad.html">
+                    <span><i class="fab fa-apple"></i></span>
+                    <span>Salad</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="main-content">
+    <div class="title">
+        Fries Menu
+        <a href="checkout.html">
+            <button class="button">Checkout</button>
+        </a>
+    </div>
+
+    <div class="wrapper">
+        <section class="admin-links">
+            <table class="table table-borderless table-striped table-styling">
+                <thead>
+                <tr>
+                    <th>item id</th>
+                    <th>details</th>
+                    <th>price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        001<br>
+                        <a target="_blank" href="img/fries.jpg">
+                            <img src="img/fries.jpg" alt="Burger">
+                        </a>
+                    </td>
+                    <td>FRENCH FRIES<br>Crispy fries, Maybe it's a matter of taste.<br>Maybe it's a matter
+                        of defensiveness after so much character assassination at the hands of Francis Masha.
+                    </td>
+                    <td>Ksh1000<br>
+                        <button type="submit" class="button">Add</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        002<br>
+                        <a target="_blank" href="img/fries.jpg">
+                            <img src="img/fries.jpg" alt="Burger">
+                        </a>
+                    </td>
+                    <td>SWAHILI FRIES<br>Crispy fries, Maybe it's a matter of taste.<br>Maybe it's a matter
+                        of defensiveness after so much character assassination at the hands of Francis Masha.
+                    </td>
+                    <td>Ksh1000<br>
+                        <button type="submit" class="button">Add</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        003<br>
+                        <a target="_blank" href="img/fries.jpg">
+                            <img src="img/fries.jpg" alt="Burger">
+                        </a>
+                    </td>
+                    <td>ITALIAN FRIES<br>Crispy fries, Maybe it's a matter of taste.<br>Maybe it's a matter
+                        of defensiveness after so much character assassination at the hands of Francis Masha.
+                    </td>
+                    <td>Ksh1000<br>
+                        <button type="submit" class="button">Add</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <a href="#">Previous</a>
+                <a href="#">2</a>
+                <a class="active" href="#">3</a>
+                <a href="#">Next</a>
+            </div>
+        </section>
+    </div>
+</div>
+
+</body>
+</html>

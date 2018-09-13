@@ -49,6 +49,14 @@ p {
     margin: 0;
 }
 
+a {
+    color: #d6d6d6;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.9;
+    font-weight: 700;
+}
+
 .table-responsive {
     padding-right: 1px;
 }
@@ -128,8 +136,16 @@ strong {
     width: 100%;
     z-index: 3;
     height: 44px;
-    background-color: #fff;
-    border-bottom: 3px solid #040202;
+    background-color: #009898;
+    border-bottom: 2px solid rgba(0, 58, 58, 0.39);
+
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    padding: 10px 10px 0;
 }
 
 /* logo in header(mobile version) and side-nav (tablet & desktop) */
@@ -141,23 +157,16 @@ strong {
 
 .header .logo {
     color: teal;
+    float: left;
+}
+
+.highlight-2 {
+    color: #ede435;
 }
 
 .side-nav .logo {
     background-color: teal;
     color: #fff;
-}
-
-.header .logo {
-    float: left;
-}
-
-.header .logo {
-    height: 44px;
-    z-index: 1;
-    padding: 10px;
-    font-weight: 700;
-    color: teal;
 }
 
 .logo i {
@@ -171,17 +180,17 @@ strong {
 
 .nav-trigger {
     position: relative;
-    float: right;
+    float: left;
     width: 20px;
     height: 44px;
-    right: 30px;
+    left: 10px;
     display: block;
 }
 
 .nav-trigger span, .nav-trigger span:before, span:after {
     width: 20px;
     height: 2px;
-    background-color: teal;
+    background-color: #d6d6d6;
     position: absolute;
 }
 
@@ -199,6 +208,16 @@ strong {
 
 .nav-trigger span:after {
     top: 6px;
+}
+
+.avatar-2 {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    float: right;
+    margin-top: -10px;
+    margin-right: 8px;
 }
 
 /* side navigation styles */
@@ -516,7 +535,6 @@ strong {
     background-color: #e6e6e6;
 }
 
-
 .table-styling tbody td.pending {
     color: #c3c300;
 }
@@ -616,59 +634,106 @@ strong {
 }
 
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
 }
 
 /* Hide default HTML checkbox */
-.switch input {display:none;}
+.switch input {
+    display: none;
+}
 
 /* The slider */
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .3s;
-  transition: .3s;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .3s;
+    transition: .3s;
 }
 
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .3s;
-  transition: .3s;
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .3s;
+    transition: .3s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+    background-color: #2196F3;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+    box-shadow: 0 0 1px #2196F3;
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
 }
 
 /* Rounded sliders */
 .slider.round {
-  border-radius: 34px;
+    border-radius: 34px;
 }
 
 .slider.round:before {
-  border-radius: 50%;
+    border-radius: 50%;
+}
+
+/*Image setting for product*/
+img {
+    border: 1px solid #ddd;
+    border-radius: 1px;
+    width: 150px;
+}
+
+img:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+/* main content styles */
+.menu-content {
+    height: 100%;
+    overflow-x: scroll;
+}
+
+/* Footer */
+
+footer {
+    padding: 10px;
+    background-color: #d4d4d4;
+    color: #383838;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination a {
+    color: #272727;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    font-size: 14px;
+}
+
+.pagination a.active {
+    background-color: #009898;
+    color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
 }

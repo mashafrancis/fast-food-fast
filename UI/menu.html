@@ -1,73 +1,155 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Fast-Food-Fast</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,
-    900|Cormorant+Garamond:300,300i,400,400i,500,500i,600,600i,700,700i"
-          rel="stylesheet">
-    <!-- Place favicon.ico in the root directory -->
-    <link rel="stylesheet" href="css/main.css">
-</head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Burger</title>
 
+    <link rel="stylesheet" href="./css/admin.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <link rel="icon" type="image" href="./img/favicon.ico">
+
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script src="./js/main.js"></script>
+
+</head>
 <body>
-<header>
-    <h2><a href="index.html">Fast Food Fast</a></h2>
+<div class="header">
+    <div>
+        <a href="#" class="nav-trigger"><span></span></a>
+    </div>
+    <div class="logo">
+        <span><a href="index.html"><span class="highlight-2">Fast Food</span>Fast</a></span>
+    </div>
+    <div>
+        <a href="#"><i class="fas fa-envelope"></i></a>&ensp;&ensp;
+        <a href="checkout.html"><i class="fas fa-shopping-cart"></i></a>&ensp;&ensp;
+        <a href="profile.html"><img src="img/img_avatar.png" alt="Avatar" class="avatar-2"></a>
+    </div>
+</div>
+<div class="side-nav">
+    <div class="logo">
+        <span><a href="index.html"><span class="highlight-2">Fast Food</span>Fast</a></span>
+    </div>
     <nav>
         <ul>
-            <li class="active"><a href="menu.html" title="Menu">Menu</a></li>
-            <li><a href="#" title="Events">Events</a></li>
-            <li><a href="login.html" title="Login">Login</a></li>
-            <li><a class="btn" href="signup.html" title="Register">Register</a></li>
+            <li class="active">
+                <a href="menu.html">
+                    <span><i class="fas fa-bars"></i></span>
+                    <span>Burger</span>
+                </a>
+            </li>
+            <li>
+                <a href="drinks.html">
+                    <span><i class="fas fa-beer"></i></span>
+                    <span>Drinks</span>
+                </a>
+            </li>
+            <li>
+                <a href="fries.html">
+                    <span><i class="fas fa-utensils"></i></i></span>
+                    <span>Fries</span>
+                </a>
+            </li>
+            <li>
+                <a href="pasta.html">
+                    <span><i class="fas fa-coffee"></i></span>
+                    <span>Pasta</span>
+                </a>
+            </li>
+            <li>
+                <a href="pizza.html">
+                    <span><i class="fab fa-codiepie"></i></span>
+                    <span>Pizza</span>
+                </a>
+            </li>
+            <li>
+                <a href="index.html">
+                    <span><i class="fab fa-apple"></i></span>
+                    <span>Salad</span>
+                </a>
+            </li>
         </ul>
     </nav>
-</header>
-<div class="menu-cover">
-    <h2>Choose your tasty meal!</h2>
 </div>
-<div class="wrapper">
-    <section class="index-links">
-        <a href="#">
-            <div class="index-boxlink-square" id="category-1">
-                <h3>Burger</h3>
-            </div>
+<div class="main-content">
+    <div class="title">
+        Burger Menu
+        <a href="checkout.html">
+            <button class="button">Checkout</button>
         </a>
-        <a href="#">
-            <div class="index-boxlink-rectangle" id="category-2">
-                <h3>Pizza</h3>
-            </div>
-        </a>
-        <a href="#">
-            <div class="index-boxlink-square" id="category-3">
-                <h3>Salads</h3>
-            </div>
-        </a>
-        <a href="#">
-            <div class="index-boxlink-rectangle" id="category-4">
-                <h3>Fries</h3>
-            </div>
-        </a>
-        <a href="#">
-            <div class="index-boxlink-square" id="category-5">
-                <h3>Pasta</h3>
-            </div>
-        </a>
-        <a href="#">
-            <div class="index-boxlink-square" id="category-6">
-                <h3>Drinks</h3>
-            </div>
-        </a>
-    </section>
-</div>
-<div class="wrapper">
-    <footer>
-        <p>Fast Food Fast, Copyright &copy; 2018</p>
-    </footer>
-</div>
-</body>
+    </div>
 
+    <div class="wrapper">
+        <section class="admin-links">
+            <table class="table table-borderless table-striped table-styling">
+                <thead>
+                <tr>
+                    <th>item id</th>
+                    <th>details</th>
+                    <th>price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        001<br>
+                        <a target="_blank" href="img/burger1.jpg">
+                            <img src="img/burger1.jpg" alt="Burger">
+                        </a>
+                    </td>
+                    <td>KING BURGER<br>Penne, pineapple tit-bits, parsleygreen bell peppers,<br> tomatoes,
+                        lettuce
+                        and gherkins
+                    </td>
+                    <td>Ksh200<br>
+                        <button type="submit" class="button">Add</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        002<br>
+                        <a target="_blank" href="img/burger.jpg">
+                            <img src="img/burger.jpg" alt="Burger">
+                        </a>
+                    </td>
+                    <td>CHILLIE BURGER<br>Penne, pineapple tit-bits, parsleygreen bell peppers,<br> tomatoes,
+                        lettuce
+                        and gherkins
+                    </td>
+                    <td>Ksh250<br>
+                        <button type="submit" class="button">Add</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        003<br>
+                        <a target="_blank" href="img/2.jpg">
+                            <img src="img/2.jpg" alt="Burger">
+                        </a>
+                    </td>
+                    <td>BURGER FRIES<br>Penne, pineapple tit-bits, parsleygreen bell peppers,<br> tomatoes,
+                        lettuce
+                        and gherkins
+                    </td>
+                    <td>Ksh1000<br>
+                        <button type="submit" class="button">Add</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <a href="#">Previous</a>
+                <a href="#">2</a>
+                <a class="active" href="#">3</a>
+                <a href="#">Next</a>
+            </div>
+        </section>
+    </div>
+</div>
+
+</body>
 </html>
