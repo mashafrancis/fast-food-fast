@@ -67,7 +67,7 @@ class UsersTest(BaseTests):
         self.assertEqual(result.status_code, 400)
         results = json.loads(result.data.decode())
         self.assertEqual(
-            results['error'], u"Password mismatch!")
+            results['error'], u"Wrong Password!")
 
     def test_register_invalid_email(self):
         """Test unsuccessful registration due to invalid email"""
@@ -186,8 +186,6 @@ class UsersTest(BaseTests):
 
     def test_header_without_token(self):
         """Test header exists but it has no token."""
-        self.client().post('/auth/resister', data=self.user_reg)
-        result = self.client().post('/auth/login', data=self.user_logs)
         response = self.client().post('/orders',
                                       headers=dict(Authorization="Bearer "),
                                       data=self.order)

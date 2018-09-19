@@ -81,11 +81,11 @@ def update_order():
 
 
 @app.route('/v1/orders/<int:order_id>', methods=["DELETE"])
-def delete_ride():
+def delete_order():
     """ endpoint for deleting an existing ride.
     ---
     parameters:
-      - name: ride_id
+      - name: order_id
         in: path
         type: integer
         required: true

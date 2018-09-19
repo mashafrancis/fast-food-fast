@@ -1,0 +1,295 @@
+# swagger: "2.0"
+openapi: 3.0.0
+servers:
+  - description: Development Server
+    url: http://127.0.0.1:5000/v1
+  - description: Production Server
+    url: https://masha-fast-food.herokuapp.com/
+info:
+  version: "1.0"
+  title: Fast Food Fast
+  description: Fast-Food-Fast is a food delivery service app for a restaurant.
+  contact:
+    name: Francis Masha
+    email: francismasha96@gmail.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Users
+      summary: Register a new user
+      operationId: registerUser
+      description: New user needs to fill in the details to be registered
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignup'
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad request
+        409:
+          description: Conflict
+
+    get:
+        tags:
+          - Users
+        summary: Get all users
+        operationId: listUsers
+        responses:
+          200:
+            description: ok
+            content:
+              'application/json':
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/UserSignup'
+          default:
+            description: error payload
+            content:
+              'application/json':
+                  schema:
+                    $ref: '#/components/schemas/Error'
+
+  /auth/login:
+    post:
+      tags:
+        - Users
+      summary: Login a user
+      operationId: loginUser
+      parameters:
+        - in: body
+          name: body
+          description: Enter your details to login
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserLogin'
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/components/schemas/ApiResponse'
+
+  /orders:
+    get:
+      tags:
+        - Orders
+      summary: List all orders
+      operationId: listOrders
+      parameters:
+        - name: order_id
+          in: query
+          description: Find a specific order
+          required: true
+          type: array
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Orders'
+      responses:
+        200:
+          description: ok
+          content:
+            application/json: {}
+
+    post:
+      tags:
+        - Orders
+      summary: Create a new order
+      operationId: addOrder
+      parameters:
+        - name: payload
+          in: body
+          type: object
+          required: true
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Orders'
+      responses:
+        200:
+          description: ok
+          content:
+            application/json: {}
+
+    delete:
+      tags:
+        - Orders
+      summary: Delete all ordeers
+      operationId: deleteOrders
+      responses:
+        '200':
+          description: Delete all orders made
+          schema:
+            $ref: '#/components/schemas/Orders'
+
+  /orders/{order_id}:
+    get:
+      tags:
+        - Orders by Id
+      summary: Get a single order by id
+      operationId: listOrders
+      parameters:
+        - name: order_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Get a single orders
+          schema:
+            $ref: '#/components/schemas/Orders'
+
+    put:
+      tags:
+        - Orders by Id
+      summary: Update an order
+      operationId: updateOrder
+      parameters:
+        - name: token
+          in: header
+          description: enter token
+          required: true
+          schema:
+            type: string
+          style: simple
+        - name: order_id
+          in: path
+          description: order_id needs to be placed in
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          'application/x-www-form-urlencoded':
+            schema:
+              properties:
+                name:
+                  description: Update name of the order
+                  type: string
+                quantity:
+                  description: Update quantity to be ordered
+                  type: string
+      responses:
+        200:
+          description: Order updated
+          content:
+            'application/json': {}
+
+    patch:
+      tags:
+        - Orders by Id
+      summary: Update an order single value
+      operationId: updateStatus
+      parameters:
+        - name: order_id
+          in: path
+          type: integer
+          required: true
+        - name: status
+          in: query
+          description: Update status
+          required: true
+          type: array
+          default: Pending
+          enum:
+          - Pending
+          - Accepted
+          - Declined
+      responses:
+        201:
+          description: Your order has been updated successfully.
+          schema:
+            $ref: '#/components/schemas/Orders'
+
+    delete:
+      tags:
+        - Orders by Id
+      summary: Deletes an order by Id
+      operationId: deleteOrder
+      responses:
+        '200':
+          description: Delete all orders made
+          schema:
+            $ref: '#/components/schemas/Orders'
+
+components:
+  schemas:
+    Orders:
+      type: object
+      properties:
+        order_id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Burger
+        quantity:
+          type: string
+          example: 4
+        price:
+          type: string
+          example: 1000
+        created_by:
+          type: string
+          example: Francis Masha
+        status:
+          type: string
+          example: Pending
+
+    UserSignup:
+      type: object
+      properties:
+        email:
+          description: email for user
+          type: string
+          example: test@gmail.com
+        password:
+          description: password for user
+          type: string
+          example: test1234
+        confirm_password:
+          description: confirmation password
+          type: string
+          example: test1234
+
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@gmail.com
+        password:
+          type: string
+          example: test1234
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+
+    Success:
+      type: object
+      properties:
+        message:
+          type: object
+
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        details:
+          type: string

@@ -1,6 +1,8 @@
 class Database:
     content = {'users': [],
-               'orders': []}
+               'orders': [],
+               'blacklist': [],
+               'roles': []}
 
     @classmethod
     def insert(cls, collection, data):

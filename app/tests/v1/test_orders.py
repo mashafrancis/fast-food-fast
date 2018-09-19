@@ -130,11 +130,6 @@ class OrderTests(BaseTests):
         access_token = json.loads(result.data.decode())['access_token']
 
         response = self.client().post('/v1/orders',
-                                      data=self.order,
-                                      content_type='application/json',
-                                      headers=dict(Authorization="Bearer " + access_token))
-        self.assertEqual(response.status_code, 201)
-        response = self.client().post('/v1/orders',
                                       data=self.order2,
                                       content_type='application/json',
                                       headers=dict(Authorization="Bearer " + access_token))

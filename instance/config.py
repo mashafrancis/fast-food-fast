@@ -1,4 +1,5 @@
 import os
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
@@ -6,6 +7,11 @@ class Config(object):
     DEBUG = False
     CSRF_ENABLED = True
     SECRET = os.getenv('SECRET') or 'you-will-never-guess-me'
+    FAST_FOOD_ADMIN = os.environ.get('ADMIN_EMAIL')
+
+    @staticmethod
+    def init_app(app):
+        pass
 
 
 class DevelopmentConfig(Config):
@@ -36,4 +42,6 @@ app_config = {
     'testing': TestingConfig,
     'staging': StagingConfig,
     'production': ProductionConfig,
+
+    'default': DevelopmentConfig
 }

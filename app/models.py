@@ -11,27 +11,32 @@ from app.utils import Savable, Utils
 class User(Savable):
     collection = 'users'
 
-    def __init__(self, email, password, user_id, **kwargs):
+    def __init__(self, email, password, **kwargs):
         super(User, self).__init__(**kwargs)
         self.email = email
         self.password = password
-        self.user_id = user_id
+        self.user_id = Database.user_count() + 1
+        if self.email == current_app.config['FAST_FOOD_ADMIN']:
+            self.role = 'admin'
+        else:
+            self.role = 'user'
 
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f'<User {self.email}'
 
     def to_dict(self):
         return {
             'user_id': self.user_id,
             'email': self.email,
-            'password': self.password
+            'password': self.password,
+            'role': self.role
         }
 
     def add_user(self):
         """Adds user to the list"""
         user = User(self.email,
-                    Utils.hash_password(self.password),
-                    self.user_id)
+                    Utils.hash_password(self.password)
+                    )
         user.save_user()
 
     @staticmethod
@@ -110,21 +115,6 @@ class User(Savable):
             return "Not Authorized.Please Register or Login"
 
 
-class Admin(User):
-    def __init__(self, username, password, access):
-        super(Admin, self).__init__(username, password)
-        self.access = access
-
-    def __repr__(self):
-        return f'<Admin {self.email}, access {self.access}>'
-
-    def to_dict(self):
-        return {
-            'password': self.password,
-            'access': self.access
-        }
-
-
 class Orders(Savable):
     collection = 'orders'
 
@@ -138,7 +128,7 @@ class Orders(Savable):
         self.status = status
 
     def __repr__(self):
-        return f'<Order {self.name}>'
+        return f'<Order {self.name}'
 
     def to_dict(self):
         return {
@@ -181,3 +171,36 @@ class Orders(Savable):
     @staticmethod
     def delete_all():
         return Database.remove_all(Orders.collection)
+
+
+class BlackList(Savable):
+    """Creates a model to handle token blacklist"""
+    collection = 'blacklist'
+
+    def __init__(self, token):
+        self.token = token
+        self.blacklisted_date = datetime.now()
+
+    def __repr__(self):
+        return '<token: {}'.format(self.token)
+
+    def to_dict(self):
+        return {
+            'token': self.token,
+            'blacklisted_date': self.blacklisted_date
+        }
+
+    def save(self):
+        blacklist = BlackList(self.token)
+        blacklist.save_blacklist()
+        return self.to_dict()
+
+    @staticmethod
+    def check_token(token):
+        """Check if token exists"""
+        finder = (lambda x: x['token'] == token)
+        response = Database.find_one(BlackList.collection, finder)
+        if response:
+            return True
+        else:
+            return False

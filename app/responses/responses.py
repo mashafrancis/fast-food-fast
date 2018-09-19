@@ -34,7 +34,8 @@ class Response:
         obj = {
             'user_id': user['user_id'],
             'email': user['email'],
-            'password': user['password']
+            'password': user['password'],
+            'role': user['role']
         }
         return obj
 

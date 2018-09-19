@@ -14,6 +14,11 @@ class Utils:
         return True if email_address_matcher.match(email) else False
 
     @staticmethod
+    def password_checker(password):
+        password_checker = re.match(r"^(?=.*[a-z])(?=.*[0-9]){6}", password)
+        return True if password_checker else False
+
+    @staticmethod
     def timestamp():
         """Return the current timestamp as an integer."""
         return int(time.time())
@@ -46,6 +51,14 @@ class Savable(metaclass=ABCMeta):
 
     def save_order(self):
         collection = 'orders'
+        Database.insert(collection, self.to_dict())
+
+    def save_blacklist(self):
+        collection = 'blacklist'
+        Database.insert(collection, self.to_dict())
+
+    def save_role(self):
+        collection = 'role'
         Database.insert(collection, self.to_dict())
 
     @abstractmethod

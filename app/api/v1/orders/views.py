@@ -3,6 +3,7 @@ import datetime
 from flask import request, jsonify
 from flask.views import MethodView
 
+from app.api.v1.auth.decorators import user_required, admin_required
 from app.database import Database
 from app.models import Orders
 from app.responses.responses import Error, Success, Response
@@ -18,7 +19,8 @@ class OrdersView(MethodView):
         self.success = Success()
         self.response = Response()
 
-    def get(self):
+    @user_required
+    def get(self, user_id):
         """Endpoint for fetching all orders."""
         results = []
         all_orders = Orders.list_all_orders()
@@ -30,7 +32,8 @@ class OrdersView(MethodView):
         else:
             return self.error.not_found('Sorry, No orders for you!')
 
-    def post(self):
+    @user_required
+    def post(self, user_id):
         """Endpoint for adding a new order."""
         data = request.get_json(force=True)
         order_id = Database.order_count() + 1
@@ -53,7 +56,8 @@ class OrdersView(MethodView):
         return jsonify({'message': 'Order has been added successfully.',
                         'Order No {}'.format(order_id): created_order}), 201
 
-    def delete(self):
+    @user_required
+    def delete(self, user_id):
         """Endpoint for deleting all orders."""
         if Database.order_count() == 0:
             return self.error.not_found('No orders available!')
@@ -70,14 +74,16 @@ class OrderView(MethodView):
         self.success = Success()
         self.response = Response()
 
-    def get(self, order_id):
+    @user_required
+    def get(self, order_id, user_id):
         """Endpoint for fetching a particular order."""
         order = Orders.find_by_id(order_id)
         if not order:
             return self.error.not_found("Sorry, Order No {} does't exist!".format(order_id))
         return self.success.complete_request(order)
 
-    def put(self, order_id):
+    @user_required
+    def put(self, order_id, user_id):
         """Endpoint for updating a particular order."""
         order = Orders.find_by_id(order_id)
         data = request.get_json(force=True)
@@ -87,10 +93,21 @@ class OrderView(MethodView):
             order[0]['name'] = data['name']
             order[0]['quantity'] = data['quantity']
             order[0]['price'] = data['price']
+            return jsonify({'order': order[0]}), 200
+
+    @admin_required
+    def patch(self, order_id, user_id):
+        """Endpoint for updating the status."""
+        order = Orders.find_by_id(order_id)
+        data = request.get_json(force=True)
+        if not order:
+            return self.error.not_found("Sorry, Order No {} doesn't exist yet! Create one.".format(order_id))
+        else:
             order[0]['status'] = data['status']
             return jsonify({'order': order[0]}), 200
 
-    def delete(self, order_id):
+    @user_required
+    def delete(self, order_id, user_id):
         """Endpoint for deleting a particular order."""
         order = Orders.find_by_id(order_id)
         if order:
@@ -105,10 +122,10 @@ class OrderView(MethodView):
 orders_view = OrdersView.as_view('orders_view')
 order_view = OrderView.as_view('order_view')
 
-orders.add_url_rule('/v1/orders',
+orders.add_url_rule('orders',
                     view_func=orders_view,
                     methods=['POST', 'GET', 'DELETE'])
 
-orders.add_url_rule('/v1/orders/<int:order_id>',
+orders.add_url_rule('orders/<int:order_id>',
                     view_func=order_view,
-                    methods=['POST', 'PUT', 'GET', 'DELETE'])
+                    methods=['PUT', 'GET', 'PATCH', 'DELETE'])

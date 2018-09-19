@@ -1,10 +1,7 @@
-import re
-
-from flask import request, jsonify, make_response, session
+from flask import request, jsonify, make_response
 from flask.views import MethodView
 
-from app.auth import auth
-from app.database import Database
+from app.api.v1.auth import auth
 from app.models import User
 from app.responses.responses import Error, Success, Response
 from app.utils import Utils
@@ -25,14 +22,13 @@ class RegistrationView(MethodView):
         email = str(data['email']).lower()
         password = data['password']
         confirm_password = data['confirm_password']
-        user_id = Database.user_count() + 1
 
         if email and password and confirm_password:
             if not Utils.email_is_valid(email):
                 return self.error.bad_request('Your email is invalid! '
                                               'Kindly provide use with the right email address format')
 
-            if not re.match(r"^(?=.*[a-z])(?=.*[0-9]){6}", password):
+            if not Utils.password_checker(password):
                 return self.error.bad_request('Password must contain: '
                                               'lowercase letters, at least a digit, and a min-length of 6')
 
@@ -41,9 +37,7 @@ class RegistrationView(MethodView):
 
             user = User.find_by_email(email)
             if not user:
-                user = User(email=email,
-                            password=password,
-                            user_id=user_id)
+                user = User(email=email, password=password)
                 user.add_user()
                 return self.success.create_resource('User {} successfully registered'.format(user.email))
             else:
@@ -97,7 +91,7 @@ class LoginView(MethodView):
                                 'access_token': access_token.decode()}
                             return make_response(jsonify(response)), 200
                     else:
-                        return self.error.bad_request('Password mismatch!')
+                        return self.error.bad_request('Wrong Password!')
                 else:
                     if not password:
                         return self.error.bad_request('Your password is missing!')
@@ -111,10 +105,10 @@ class LoginView(MethodView):
 registration_view = RegistrationView.as_view('register_view')
 login_view = LoginView.as_view('login_view')
 
-auth.add_url_rule('/v1/auth/register',
+auth.add_url_rule('auth/register',
                   view_func=registration_view,
                   methods=['POST', 'GET'])
 
-auth.add_url_rule('/v1/auth/login',
+auth.add_url_rule('auth/login',
                   view_func=login_view,
                   methods=['POST', 'GET'])
