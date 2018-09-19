@@ -1,5 +1,5 @@
 from flask import Blueprint
 
-orders = Blueprint('order', __name__, url_prefix='/api/v1/')
+orders = Blueprint('order', __name__)
 
-from . import views, errors
+from . import views

@@ -1,11 +1,11 @@
 import json
 import unittest
 
-from app.models import User
+from app.api.v1.models.user import User
 from .base_test import BaseTests
 
 
-class UsersTest(BaseTests):
+class AuthTest(BaseTests):
     """Tests functionality of user endpoints."""
 
     def test_user_registration_successful(self):
@@ -14,7 +14,7 @@ class UsersTest(BaseTests):
         data1 = json.dumps({'email': 'test@gmail.com', 'password': ''})
         data2 = json.dumps({'email': 'test@gmail.com', 'password': 'blah'})
 
-        response = self.client().post('/v1/auth/register', data=self.user_reg,
+        response = self.client().post('/api/v1/auth/register', data=self.user_reg,
                                       content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertIn('test@gmail.com', str(response.data))
@@ -25,11 +25,11 @@ class UsersTest(BaseTests):
 
         # Test API can get all users.
         self.assertIn('test@gmail.com', str(response.data))
-        response = self.client().get('/v1/auth/register')
+        response = self.client().get('/api/v1/auth/register')
         self.assertEqual(response.status_code, 200)
 
         # Test unsuccessful registration due to duplicate email
-        response = self.client().post('/v1/auth/register',
+        response = self.client().post('/api/v1/auth/register',
                                       data=self.user_same_email, content_type='application/json')
         self.assertEqual(response.status_code, 409)
         result = json.loads(response.data.decode())
@@ -37,7 +37,7 @@ class UsersTest(BaseTests):
             result['error'],
             u"User already exists! Please login.")
 
-        login_response = self.client().post('/v1/auth/login', data=self.user_logs,
+        login_response = self.client().post('/api/v1/auth/login', data=self.user_logs,
                                             content_type='application/json')
 
         result = json.loads(login_response.data.decode())
@@ -46,7 +46,7 @@ class UsersTest(BaseTests):
         self.assertTrue(result['access_token'])
 
         # Test email missing email
-        result = self.client().post('/v1/auth/login', data=data,
+        result = self.client().post('/api/v1/auth/login', data=data,
                                     content_type='application/json')
         self.assertEqual(result.status_code, 400)
         results = json.loads(result.data.decode())
@@ -54,7 +54,7 @@ class UsersTest(BaseTests):
             results['error'], u"Your email is missing!")
 
         # Test missing password
-        result = self.client().post('/v1/auth/login', data=data1,
+        result = self.client().post('/api/v1/auth/login', data=data1,
                                     content_type='application/json')
         self.assertEqual(result.status_code, 400)
         results = json.loads(result.data.decode())
@@ -62,7 +62,7 @@ class UsersTest(BaseTests):
             results['error'], u"Your password is missing!")
 
         # Test mismatch password
-        result = self.client().post('/v1/auth/login', data=data2,
+        result = self.client().post('/api/v1/auth/login', data=data2,
                                     content_type='application/json')
         self.assertEqual(result.status_code, 400)
         results = json.loads(result.data.decode())
@@ -76,7 +76,7 @@ class UsersTest(BaseTests):
         data2 = json.dumps({
             'email': '', 'password': 'Moonpie1#', 'confirm_password': 'Moonpie1#'})
 
-        response = self.client().post('/v1/auth/register',
+        response = self.client().post('/api/v1/auth/register',
                                       data=data, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
@@ -85,7 +85,7 @@ class UsersTest(BaseTests):
             u"Your email is invalid! Kindly provide use with the right email address format")
 
         # Test email not provided
-        response = self.client().post('/v1/auth/register',
+        response = self.client().post('/api/v1/auth/register',
                                       data=data2, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
@@ -99,7 +99,7 @@ class UsersTest(BaseTests):
             'email': 'test@gmail.com', 'password': 'foo', 'confirm_password': 'foo'})
         data2 = json.dumps({
             'email': 'test@gmail.com', 'password': '', 'confirm_password': ''})
-        response = self.client().post('/v1/auth/register',
+        response = self.client().post('/api/v1/auth/register',
                                       data=data, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
@@ -108,7 +108,7 @@ class UsersTest(BaseTests):
             u"Password must contain: lowercase letters, at least a digit, and a min-length of 6")
 
         # Test password not provided
-        response = self.client().post('/v1/auth/register',
+        response = self.client().post('/api/v1/auth/register',
                                       data=data2, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
@@ -122,7 +122,7 @@ class UsersTest(BaseTests):
             'email': 'test@gmail.com', 'password': 'moonpie1#', 'confirm_password': ''})
         data2 = json.dumps({
             'email': 'test@gmail.com', 'password': 'moonpie1#', 'confirm_password': 'moonpie1'})
-        response = self.client().post('/v1/auth/register',
+        response = self.client().post('/api/v1/auth/register',
                                       data=data, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
@@ -130,7 +130,7 @@ class UsersTest(BaseTests):
             result['error'],
             u"Please provide password!")
 
-        response = self.client().post('/v1/auth/register',
+        response = self.client().post('/api/v1/auth/register',
                                       data=data2, content_type='application/json')
         self.assertEqual(response.status_code, 400)
         result = json.loads(response.data.decode())
@@ -142,13 +142,13 @@ class UsersTest(BaseTests):
         """Tests unsuccessful registration due to whitespace passwords"""
         data = json.dumps({
             'email': 'test@gmail.com', 'password': '       ', 'confirm_password': '       '})
-        response = self.client().post('/v1/auth/register',
+        response = self.client().post('/api/v1/auth/register',
                                       data=data, content_type='application/json')
         self.assertEqual(response.status_code, 400)
 
     def test_no_user_found(self):
         """ Test API can return no users found."""
-        response = self.client().get('/v1/auth/register')
+        response = self.client().get('/api/v1/auth/register')
         self.assertEqual(response.status_code, 404)
         response = json.loads(response.data.decode())
         self.assertEqual(
@@ -158,7 +158,7 @@ class UsersTest(BaseTests):
     def test_non_registered_user_login(self):
         """Test non registered users cannot login."""
         non_user = json.dumps({'email': 'blah@gmail.com', 'password': 'notauseryet'})
-        response = self.client().post('/v1/auth/login', data=non_user,
+        response = self.client().post('/api/v1/auth/login', data=non_user,
                                       content_type='application/json')
         results = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 401)
@@ -167,13 +167,13 @@ class UsersTest(BaseTests):
 
     def test_no_token_get_all(self):
         """Test unauthorized to get all users without a token."""
-        response = self.client().get('/v1/users')
+        response = self.client().get('/api/v1/users')
         self.assertEqual(response.status_code, 401)
 
     def test_invalid_token(self):
         """Test token is not in use."""
-        self.client().post('/v1/auth/register', data=self.user_reg)
-        result = self.client().post('/v1/auth/login', data=self.user_logs)
+        self.client().post('/api/v1/auth/register', data=self.user_reg)
+        result = self.client().post('/api/v1/auth/login', data=self.user_logs)
         access_token = json.loads(result.data.decode())['access_token']
         self.client().post('/auth/logout',
                            headers=dict(Authorization="Bearer " + access_token))
@@ -186,7 +186,7 @@ class UsersTest(BaseTests):
 
     def test_header_without_token(self):
         """Test header exists but it has no token."""
-        response = self.client().post('/orders',
+        response = self.client().post('/api/v1/orders',
                                       headers=dict(Authorization="Bearer "),
                                       data=self.order)
         return response

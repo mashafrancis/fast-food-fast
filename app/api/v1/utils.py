@@ -4,7 +4,7 @@ import time
 from abc import abstractmethod, ABCMeta
 from passlib.handlers.pbkdf2 import pbkdf2_sha512
 
-from app.database import Database
+from app.data import Database
 
 
 class Utils:

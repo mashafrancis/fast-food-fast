@@ -2,9 +2,9 @@ from flask import request, jsonify, make_response
 from flask.views import MethodView
 
 from app.api.v1.auth import auth
-from app.models import User
-from app.responses.responses import Error, Success, Response
-from app.utils import Utils
+from app.api.v1.models.user import User
+from app.responses import Error, Success, Response
+from app.api.v1.utils import Utils
 
 
 class RegistrationView(MethodView):

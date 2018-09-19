@@ -1,9 +1,7 @@
-import os
-import sys
 import unittest
 
-from app.database import Database
-from app.models import User
+from app.data import Database
+from app.api.v1.models import User
 
 from .base_test import BaseTests
 

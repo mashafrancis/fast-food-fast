@@ -4,9 +4,9 @@ from flask import request, jsonify
 from flask.views import MethodView
 
 from app.api.v1.auth.decorators import user_required, admin_required
-from app.database import Database
-from app.models import Orders
-from app.responses.responses import Error, Success, Response
+from app.data import Database
+from app.api.v1.models.order import Orders
+from app.responses import Error, Success, Response
 from . import orders
 
 

@@ -2,7 +2,8 @@ from functools import wraps
 
 from flask import request, make_response, jsonify
 
-from app.models import BlackList, User
+from app.api.v1.models.blacklist import BlackList
+from app.api.v1.models.user import User
 
 
 def user_required(f):

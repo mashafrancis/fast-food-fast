@@ -5,7 +5,8 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from app import create_app, models
+from app import create_app
+from app.api.v1 import models
 
 
 class BaseTests(unittest.TestCase):

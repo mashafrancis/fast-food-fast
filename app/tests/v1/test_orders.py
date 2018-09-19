@@ -8,10 +8,10 @@ class OrderTests(BaseTests):
     """Tests functionality of the orders endpoint"""
 
     def register_user(self):
-        return self.client().post('/v1/auth/register', data=self.user_reg)
+        return self.client().post('/api/v1/auth/register', data=self.user_reg)
 
     def login_user(self):
-        return self.client().post('/v1/auth/login', data=self.user_logs)
+        return self.client().post('/api/v1/auth/login', data=self.user_logs)
 
     def test_create_order(self):
         """Test API can create an order (POST)"""
@@ -22,7 +22,7 @@ class OrderTests(BaseTests):
         # Obtain access token
         access_token = json.loads(result.data.decode())['access_token']
 
-        response = self.client().post('/v1/orders',
+        response = self.client().post('/api/v1/orders',
                                       content_type='application/json',
                                       headers=dict(Authorization="Bearer " + access_token),
                                       data=self.order)
@@ -38,26 +38,26 @@ class OrderTests(BaseTests):
         access_token = json.loads(result.data.decode())['access_token']
 
         # Test for no orders found.
-        response = self.client().get('/v1/orders',
+        response = self.client().get('/api/v1/orders',
                                      headers=dict(Authorization="Bearer " + access_token))
         self.assertEqual(response.status_code, 404)
         result = json.loads(response.data.decode())
         self.assertEqual(result['error'], u"Sorry, No orders for you!")
 
         # Test user cannot delete non existent orders
-        response = self.client().delete('/v1/orders',
+        response = self.client().delete('/api/v1/orders',
                                         headers=dict(Authorization="Bearer " + access_token))
         self.assertEqual(response.status_code, 404)
         result = json.loads(response.data.decode())
         self.assertEqual(result['error'], u"No orders available!")
 
         # Test for orders found.
-        response = self.client().post('/v1/orders',
+        response = self.client().post('/api/v1/orders',
                                       content_type='application/json',
                                       headers=dict(Authorization="Bearer " + access_token),
                                       data=self.order)
         self.assertEqual(response.status_code, 201)
-        response = self.client().get('/v1/orders')
+        response = self.client().get('/api/v1/orders')
         self.assertEqual(response.status_code, 200)
 
     def test_get_order_by_id(self):
