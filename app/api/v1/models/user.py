@@ -11,8 +11,7 @@ from app.api.v1.utils import Savable, Utils
 class User(Savable):
     collection = 'users'
 
-    def __init__(self, email, password, **kwargs):
-        super(User, self).__init__(**kwargs)
+    def __init__(self, email, password):
         self.email = email
         self.password = password
         self.user_id = Database.user_count() + 1

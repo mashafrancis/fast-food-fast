@@ -13,7 +13,7 @@ def user_required(f):
         auth_header = request.headers.get('Authorization', None)
         if not auth_header:
             return make_response(jsonify({
-                'error': 'Login to get authorized. If you had logged in, your session expired.'}), 401)
+                'error': 'Login or Register to get authorized. If you had logged in, your session expired.'}), 401)
         else:
             token = auth_header.split("Bearer ")
             access_token = token[0]
