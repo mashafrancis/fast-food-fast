@@ -46,23 +46,21 @@ class AuthTest(BaseTests):
             self.assertTrue(data4['status'] == 'Bad Request')
             self.assertTrue(data4['message'] == 'Wrong Password!')
 
-            # Test user profile
-            response5 = self.client().get(
-                '/api/v1/auth/profile',
-                headers=dict(Authorizarion='Bearer ' + json.loads(
-                    response3.data.decode())['access_token']))
+            # Test missing password
+            response5 = self.login_user('test@gmail.com', '')
             data5 = json.loads(response5.data.decode())
-            self.assertTrue(data5['status'] == 'OK')
-            # self.assertTrue(data['message'] is not None)
-            self.assertEqual(response5.status_code, 200)
+            self.assertEqual(response5.status_code, 400)
+            self.assertTrue(response5.content_type == 'application/json')
+            self.assertTrue(data5['status'] == 'Bad Request')
+            self.assertTrue(data5['message'] == 'Your password is missing!')
 
-            # Test user logout
-            self.assertTrue(data['access_token'])
-            response6 = self.user_logout(data['access_token'])
+            # Test missing email
+            response6 = self.login_user('', 'test1234')
             data6 = json.loads(response6.data.decode())
-            self.assertEqual(response6.status_code, 200)
-            self.assertTrue(data6['status'] == 'Ok')
-            self.assertTrue(data6['message'] == 'You have been logged out successfully!')
+            self.assertEqual(response6.status_code, 400)
+            self.assertTrue(response6.content_type == 'application/json')
+            self.assertTrue(data6['status'] == 'Bad Request')
+            self.assertTrue(data6['message'] == 'Your email is missing!')
 
     def test_user_registration_missing_email(self):
         """Test unsuccessful registration due to missing email"""
@@ -140,15 +138,6 @@ class AuthTest(BaseTests):
             self.assertTrue(data['status'] == 'Unauthorized')
             self.assertTrue(data['message'] == 'Your email is invalid! Kindly recheck your email.')
 
-    def test_user_logout(self):
-        """Test a user is logged out with a valid token"""
-        with self.client():
-            data = self.user_register_login()
-            self.assertTrue(data['access_token'])
-            response = self.user_logout(data['access_token'])
-            data2 = json.loads(response.data.decode())
-            self.assertEqual(response.status_code, 200)
-            self.assertTrue(data2['status'] == 'Ok')
-            self.assertTrue(data2['message'] == 'You have been logged out successfully!')
 
-
+if __name__ == '__main__':
+    unittest.main()

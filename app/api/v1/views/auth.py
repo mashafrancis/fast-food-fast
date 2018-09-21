@@ -1,7 +1,6 @@
-from flask import request, Blueprint, make_response, jsonify
+from flask import request, Blueprint
 from flask.views import MethodView
 
-from app.api.v1.models.blacklist import BlackList
 from app.api.v1.models.user import User
 from app.responses import Error, Success, Response, Auth
 from app.api.v1.common.utils import Utils
@@ -97,56 +96,8 @@ class LoginView(MethodView, Responses):
             return self.error.internal_server_error(str(e))
 
 
-class ProfileView(MethodView, Responses):
-    """This class handles the user resource"""
-
-    def get(self):
-        header_auth = request.headers.get('Authorization', None)
-        if not header_auth:
-            return self.error.unauthorized(
-                'Login to view your profile!.')
-        else:
-            token = header_auth.split("Bearer ")
-            access_token = token[1]
-            access_token = access_token.encode()
-            if access_token:
-                response = User.decode_token(access_token)
-                if not isinstance(response, str):
-                    user = User.find_by_id(user_id=response)
-                    return self.success.complete_request(user)
-                return self.error.unauthorized(response)
-            return self.error.unauthorized('No access token!')
-            # return self.success.complete_request(user)
-
-
-class LogoutView(MethodView, Responses):
-    """This class handles the user logout resource"""
-
-    def post(self):
-        # Retrieve token
-        header_auth = request.headers.get('Authorization', None)
-
-        if not header_auth:
-            return self.error.internal_server_error('No token provided!')
-        else:
-            token = header_auth.split(" ")
-            access_token = token[1]
-            if not access_token:
-                return self.error.unauthorized('Invalid token!')
-            else:
-                user = User.decode_token(access_token)
-                if not isinstance(user, str):
-                    invalid_token = BlackList(access_token)
-                    invalid_token.save_blacklist()
-                    return self.success.complete_request('You have been logged out successfully!')
-                else:
-                    return self.error.unauthorized(user)
-
-
 registration_view = RegistrationView.as_view('register_view')
 login_view = LoginView.as_view('login_view')
-user_view = ProfileView.as_view('user_view')
-logout_view = LogoutView.as_view('logout_view')
 
 auth.add_url_rule('auth/register',
                   view_func=registration_view,
@@ -154,12 +105,4 @@ auth.add_url_rule('auth/register',
 
 auth.add_url_rule('auth/login',
                   view_func=login_view,
-                  methods=['POST'])
-
-auth.add_url_rule('auth/profile',
-                  view_func=user_view,
-                  methods=['GET'])
-
-auth.add_url_rule('auth/logout',
-                  view_func=logout_view,
                   methods=['POST'])

@@ -28,12 +28,17 @@ class TestUserModel(BaseTests):
         access_token = u.generate_token(u.user_id)
         self.assertTrue(isinstance(access_token, bytes))
 
-    def test_decode_access_token(self):
-        u = User('test@gmail.com', 'test1234')
-        u.add_user()
-        access_token = u.generate_token(u.user_id)
-        self.assertTrue(isinstance(access_token, bytes))
-        self.assertTrue(User.decode_token(access_token) == 1)
+    def test_user_has_attributes(self):
+        self.assertEqual(hasattr(User, 'generate_token'), True)
+        self.assertEqual(hasattr(User, 'add_user'), True)
+        self.assertEqual(hasattr(User, 'list_all_users'), True)
+        self.assertEqual(hasattr(User, 'find_by_email'), True)
+        self.assertEqual(hasattr(User, 'find_by_id'), True)
+        self.assertEqual(hasattr(User, 'find_by_username'), True)
+        self.assertEqual(hasattr(User, 'delete'), True)
+        self.assertEqual(hasattr(User, 'hash_password'), True)
+        self.assertEqual(hasattr(User, 'check_hashed_password'), True)
+        self.assertEqual(hasattr(User, 'decode_token'), True)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask.views import MethodView
 
+from app.api.v1.common.decorators import user_required
 from app.api.v1.models.user import User
 from app.responses import Auth, Error, Success, Response
 
@@ -17,8 +18,9 @@ class UsersView(MethodView):
         self.success = Success()
         self.response = Response()
 
-    def get(self):
-        """API GET Requests for this view. Url ---> /v1/auth/register"""
+    @user_required
+    def get(self, user_id):
+        """API GET Requests for this view. Url ---> /v1/auth/users"""
         results = []
         users = User.list_all_users()
         if users:

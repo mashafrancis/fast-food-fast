@@ -1,6 +1,3 @@
-from flask import request
-
-from app.api.v1.models.user import User
 from app.data import Database
 from app.api.v1.common.utils import Savable
 
@@ -61,17 +58,4 @@ class Orders(Savable):
     @staticmethod
     def delete_all():
         return Database.remove_all(Orders.collection)
-
-    @staticmethod
-    def created_by():
-        header_auth = request.headers.get('Authorization', None)
-        token = header_auth.split("Bearer ")
-        access_token = token[1]
-        access_token = access_token.encode()
-        if access_token:
-            response = User.decode_token(access_token)
-            user = User.find_by_id(user_id=response)
-            for k, v in user[0].items():
-                return k, v
-
 

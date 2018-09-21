@@ -97,6 +97,12 @@ class BaseTests(unittest.TestCase):
         self.assertTrue(data['message'] == u"Order has been added successfully.")
         self.assertEqual(response.status_code, 201)
 
+    def user_token_get(self):
+        self.register_user('test@gmail.com', 'test1234', 'test1234')
+        data = self.login_user('test@gmail.com', 'test1234')
+        access_token = json.loads(data.data.decode())['access_token']
+        return access_token
+
     def tearDown(self):
         with self.app.app_context():
             models.all_orders = {}
