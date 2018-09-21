@@ -31,29 +31,6 @@ class BaseTests(unittest.TestCase):
             'status': 'Accepted'
         })
 
-        self.user_reg = json.dumps({
-            'email': 'test@gmail.com',
-            'password': 'Moonpie1#',
-            'confirm_password': 'Moonpie1#'
-        })
-
-        self.user_logs = json.dumps({
-            'email': 'test@gmail.com',
-            'password': 'Moonpie1#'
-        })
-
-        self.user_same_email = json.dumps({
-            'email': 'test@gmail.com',
-            'password': 'pie1#Moon',
-            'confirm_password': 'pie1#Moon'
-        })
-
-        self.user_same_username = json.dumps({
-            'email': 'blah@gmail.com',
-            'password': 'pie1#Moon',
-            'confirm_password': 'pie1#Moon'
-        })
-
     def register_user(self, email, password, confirm_password):
         """Register user with dummy data"""
         return self.client().post(
@@ -80,7 +57,7 @@ class BaseTests(unittest.TestCase):
         # Register user
         response = self.register_user('moonpie@gmail.com', 'test1234', 'test1234')
         data = json.loads(response.data.decode())
-        self.assertTrue(data['status'] == 'Created')
+        self.assertTrue(data['status'] == 'User Created')
         self.assertTrue(data['message'] == u"User moonpie@gmail.com successfully registered")
         self.assertTrue(response.content_type == 'application/json')
         self.assertEqual(response.status_code, 201)

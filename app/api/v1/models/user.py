@@ -5,7 +5,7 @@ from flask import current_app
 from passlib.handlers.pbkdf2 import pbkdf2_sha512
 
 from app.data import Database
-from app.api.v1.utils import Savable, Utils
+from app.api.v1.common.utils import Savable, Utils
 
 
 class User(Savable):
@@ -15,10 +15,11 @@ class User(Savable):
         self.email = email
         self.password = password
         self.user_id = Database.user_count() + 1
+        self.date_registered = datetime.now()
         if self.email == current_app.config['FAST_FOOD_ADMIN']:
-            self.role = 'admin'
+            self.type = 'admin'
         else:
-            self.role = 'user'
+            self.type = 'user'
 
     def __repr__(self):
         return f'<User {self.email}'
@@ -28,7 +29,8 @@ class User(Savable):
             'user_id': self.user_id,
             'email': self.email,
             'password': self.password,
-            'role': self.role
+            'type': self.type,
+            'date_registered': self.date_registered
         }
 
     def add_user(self):
@@ -83,7 +85,8 @@ class User(Savable):
         """
         return pbkdf2_sha512.verify(password, hashed_password)
 
-    def generate_token(self, user_id):
+    @staticmethod
+    def generate_token(user_id):
         """
         Generates authentication token.
         :param user_id:

@@ -1,5 +1,5 @@
 from app.data import Database
-from app.api.v1.utils import Savable
+from app.api.v1.common.utils import Savable
 
 
 class Orders(Savable):

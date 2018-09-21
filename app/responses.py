@@ -35,7 +35,8 @@ class Response:
             'user_id': user['user_id'],
             'email': user['email'],
             'password': user['password'],
-            'role': user['role']
+            'type': user['type'],
+            'date_registered': user['date_registered']
         }
         return obj
 
@@ -105,6 +106,12 @@ class Error(Response):
 class Auth(Response):
     """For authentication with token"""
     def create_resource(self, message, token):
+        response = jsonify({"status": "User Created",
+                            "message": message,
+                            "access_token": token})
+        return make_response(response), self.created_status
+
+    def complete_request(self, message, token):
         response = jsonify({"status": "OK",
                             "message": message,
                             "access_token": token})

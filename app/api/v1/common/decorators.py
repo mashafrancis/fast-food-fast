@@ -10,22 +10,22 @@ def user_required(f):
     """Checks for valid token for a registered user in the header."""
     @wraps(f)
     def decorated(*args, **kwargs):
-        auth_header = request.headers.get('Authorization', None)
-        if not auth_header:
+        header_auth = request.headers.get('Authorization', None)
+        if not header_auth:
             return make_response(jsonify({
                 'error': 'Login or Register to get authorized. If you had logged in, your session expired.'}), 401)
         else:
-            token = auth_header.split("Bearer ")
-            access_token = token[0]
+            token = header_auth.split("Bearer ")
+            access_token = token[1]
             access_token = access_token.encode()
             if access_token:
                 blacklisted = BlackList.check_token(access_token)
                 if not blacklisted:
-                    user_id = User.decode_token(access_token)
-                    if not isinstance(user_id, str):
-                        user_id = user_id
+                    response = User.decode_token(access_token)
+                    if not isinstance(response, str):
+                        user_id = User.find_by_id(user_id=response)
                     else:
-                        return make_response(jsonify({'message': user_id}), 201)
+                        return make_response(jsonify({'message': response}), 201)
                 else:
                     return make_response(jsonify({'error': 'Invalid token!'}), 401)
             else:
@@ -36,24 +36,25 @@ def user_required(f):
 
 def admin_required(f):
     """Checks for valid token for an admin in the header."""
+
     @wraps(f)
     def decorated(*args, **kwargs):
-        auth_header = request.headers.get('Authorization', None)
-        if not auth_header:
+        header_auth = request.headers.get('Authorization', None)
+        if not header_auth:
             return make_response(jsonify({
-                'error': 'Login as admin to get authorized. If you had logged in, your session expired.'}), 401)
+                'error': 'Login or Register to get authorized. If you had logged in, your session expired.'}), 401)
         else:
-            token = auth_header.split("Bearer ")
+            token = header_auth.split("Bearer ")
             access_token = token[1]
             access_token = access_token.encode()
             if access_token:
                 blacklisted = BlackList.check_token(access_token)
                 if not blacklisted:
-                    user_id = User.decode_token(access_token)
-                    if not isinstance(user_id, str):
-                        user_id = user_id
+                    response = User.decode_token(access_token)
+                    if not isinstance(response, str):
+                        user_id = User.find_by_id(user_id=response)
                     else:
-                        return make_response(jsonify({'message': user_id}), 201)
+                        return make_response(jsonify({'message': response}), 201)
                 else:
                     return make_response(jsonify({'error': 'Invalid token!'}), 401)
             else:

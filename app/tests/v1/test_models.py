@@ -1,7 +1,6 @@
 import unittest
 
 from app.api.v1.models.user import User
-from app.data import Database
 
 from .base_test import BaseTests
 

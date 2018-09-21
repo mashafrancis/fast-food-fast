@@ -16,7 +16,7 @@ class AuthTest(BaseTests):
             self.assertIn('test@gmail.com', str(response.data))
             self.assertIsNotNone(User.find_by_email('test@gmail.com'))
             self.assertIsNotNone(User.find_by_id(1))
-            self.assertTrue(data['status'] == 'Created')
+            self.assertTrue(data['status'] == 'User Created')
             self.assertTrue(data['message'] == u"User test@gmail.com successfully registered")
             self.assertFalse(data['message'] == u"User successfully registered")
             self.assertTrue(response.content_type == 'application/json')
@@ -35,6 +35,8 @@ class AuthTest(BaseTests):
             data3 = json.loads(response3.data.decode())
             self.assertTrue(data3['status'] == 'OK')
             self.assertTrue(data3['message'] == 'You have logged in successfully!')
+            self.assertTrue(data3['access_token'])
+            self.assertTrue(response3.content_type == 'application/json')
             self.assertEqual(response3.status_code, 200)
 
             # Test login password is valid
@@ -44,17 +46,23 @@ class AuthTest(BaseTests):
             self.assertTrue(data4['status'] == 'Bad Request')
             self.assertTrue(data4['message'] == 'Wrong Password!')
 
-    def test_user_registration_fails_if_content_type_not_json(self):
-        """Test the content type received is application/json"""
-        with self.client():
-            response = self.client().post(
-                '/api/v1/auth/register',
-                content_type='application/text',
-                data=json.dumps(dict(email='test@gmail.com', password='test1234', confirm_password='test1234')))
-            data = json.loads(response.data.decode())
-            self.assertTrue(data['status'] == 'Bad Request')
-            self.assertTrue(data['message'] == 'Content-type must be JSON!')
-            self.assertEqual(response.status_code, 400)
+            # Test user profile
+            response5 = self.client().get(
+                '/api/v1/auth/profile',
+                headers=dict(Authorizarion='Bearer ' + json.loads(
+                    response3.data.decode())['access_token']))
+            data5 = json.loads(response5.data.decode())
+            self.assertTrue(data5['status'] == 'OK')
+            # self.assertTrue(data['message'] is not None)
+            self.assertEqual(response5.status_code, 200)
+
+            # Test user logout
+            self.assertTrue(data['access_token'])
+            response6 = self.user_logout(data['access_token'])
+            data6 = json.loads(response6.data.decode())
+            self.assertEqual(response6.status_code, 200)
+            self.assertTrue(data6['status'] == 'Ok')
+            self.assertTrue(data6['message'] == 'You have been logged out successfully!')
 
     def test_user_registration_missing_email(self):
         """Test unsuccessful registration due to missing email"""
@@ -112,17 +120,15 @@ class AuthTest(BaseTests):
             self.assertTrue(data['message'] == 'Your password must match!')
             self.assertEqual(response.status_code, 400)
 
-    def test_login_request_payload_is_json(self):
-        """Test the content type is application/json"""
+    def test_login_non_registered(self):
+        """Test login for non-registered user"""
         with self.client():
-            response = self.client().post(
-                '/api/v1/auth/login',
-                content_type='application/text',
-                data=json.dumps(dict(email='test@gmail.com', password='test1234')))
+            response = self.login_user('test@gmail.com', 'test1234')
             data = json.loads(response.data.decode())
-            self.assertTrue(data['status'] == 'Bad Request')
-            self.assertTrue(data['message'] == 'Content-type must be JSON!')
-            self.assertEqual(response.status_code, 400)
+            self.assertTrue(data['status'] == 'Not Found')
+            self.assertTrue(data['message'] == 'User does not exist. Kindly register!')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 404)
 
     def test_login_has_correct_email(self):
         """Test login email has the correct format"""
@@ -138,6 +144,7 @@ class AuthTest(BaseTests):
         """Test a user is logged out with a valid token"""
         with self.client():
             data = self.user_register_login()
+            self.assertTrue(data['access_token'])
             response = self.user_logout(data['access_token'])
             data2 = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
