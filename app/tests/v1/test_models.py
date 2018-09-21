@@ -23,6 +23,19 @@ class TestUserModel(BaseTests):
         pass2 = u2.hash_password(u2.password)
         self.assertTrue(pass1 != pass2)
 
+    def test_encode_access_token(self):
+        u = User('test@gmail.com', 'test1234')
+        u.add_user()
+        access_token = u.generate_token(u.user_id)
+        self.assertTrue(isinstance(access_token, bytes))
+
+    def test_decode_access_token(self):
+        u = User('test@gmail.com', 'test1234')
+        u.add_user()
+        access_token = u.generate_token(u.user_id)
+        self.assertTrue(isinstance(access_token, bytes))
+        self.assertTrue(User.decode_token(access_token) == 1)
+
 
 if __name__ == '__main__':
     unittest.main()

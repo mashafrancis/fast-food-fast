@@ -81,12 +81,12 @@ class BaseTests(unittest.TestCase):
         response = self.register_user('moonpie@gmail.com', 'test1234', 'test1234')
         data = json.loads(response.data.decode())
         self.assertTrue(data['status'] == 'Created')
-        self.assertTrue(data['message'] == u"User test@gmail.com successfully registered")
+        self.assertTrue(data['message'] == u"User moonpie@gmail.com successfully registered")
         self.assertTrue(response.content_type == 'application/json')
-        self.assertEqual(response.stattus_code, 201)
+        self.assertEqual(response.status_code, 201)
 
         # Login user
-        response2 = self.login_user('test@gmail.com', 'test1234')
+        response2 = self.login_user('moonpie@gmail.com', 'test1234')
         data2 = json.loads(response2.data.decode())
         self.assertTrue(data2['status'] == 'OK')
         self.assertTrue(data2['message'] == 'You have logged in successfully!')

@@ -83,9 +83,12 @@ class User(Savable):
         """
         return pbkdf2_sha512.verify(password, hashed_password)
 
-    @staticmethod
-    def generate_token(user_id):
-        """Generates authentication token."""
+    def generate_token(self, user_id):
+        """
+        Generates authentication token.
+        :param user_id:
+        :return: string
+        """
         try:
             payload = {
                 'exp': datetime.utcnow() + timedelta(minutes=60),
@@ -103,12 +106,16 @@ class User(Savable):
             return str(e)
 
     @staticmethod
-    def decode_token(token):
-        """Decode the access token from the authorization."""
+    def decode_token(access_token):
+        """
+        Decode the access token from the authorization.
+        :param access_token:
+        :return: integer or string
+        """
         try:
-            payload = jwt.decode(token, current_app.config['SECRET'])
+            payload = jwt.decode(access_token, current_app.config['SECRET'])
             return payload['sub']
         except jwt.ExpiredSignatureError:
-            return "Not Authorized please login!"
+            return "Signature Expired. Please login!"
         except jwt.InvalidTokenError:
-            return "Not Authorized.Please Register or Login"
+            return "Invalid Token. Please Register or Login"

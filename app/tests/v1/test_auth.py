@@ -145,4 +145,3 @@ class AuthTest(BaseTests):
             self.assertTrue(data2['message'] == 'You have been logged out successfully!')
 
 
-

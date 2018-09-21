@@ -1,13 +1,14 @@
 import datetime
 
-from flask import request, jsonify
+from flask import request, jsonify, Blueprint
 from flask.views import MethodView
 
-from app.api.v1.auth.decorators import user_required, admin_required
+from app.api.v1.decorators import user_required, admin_required
 from app.data import Database
 from app.api.v1.models.order import Orders
 from app.responses import Error, Success, Response
-from . import orders
+
+orders = Blueprint('order', __name__)
 
 
 class OrdersView(MethodView):

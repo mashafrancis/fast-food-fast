@@ -1,10 +1,12 @@
-from flask import request
+from flask import request, Blueprint
 from flask.views import MethodView
 
-from app.api.v1.auth import auth
+from app.api.v1.models.blacklist import BlackList
 from app.api.v1.models.user import User
 from app.responses import Error, Success, Response, Auth
 from app.api.v1.utils import Utils
+
+auth = Blueprint('auth', __name__)
 
 
 class RegistrationView(MethodView):
@@ -98,8 +100,42 @@ class LoginView(MethodView):
             return self.error.internal_server_error(str(e))
 
 
+class LogoutView(MethodView):
+    def __init__(self):
+        super().__init__()
+        self.auth = Auth()
+        self.error = Error()
+        self.success = Success()
+        self.response = Response()
+
+    def post(self):
+        # Retrieve token
+        try:
+            header_auth = request.headers.get('Authorization', None)
+
+            if header_auth:
+                try:
+                    access_token = header_auth.split(" ")[1]
+                except IndexError:
+                    return self.error.unauthorized('Please provide a valid access_token!')
+                else:
+                    access_token = header_auth.split(" ")[1]
+                    if access_token:
+                        decoded_token = User.decode_token(access_token)
+                        if not isinstance(decoded_token, str):
+                            token_invalid = BlackList(access_token)
+                            token_invalid.save()
+                            return self.success.ok_status('You have been logged out successfully!')
+                        return self.error.bad_request(decoded_token)
+                    return self.error.unauthorized('Invalid token!')
+        except Exception as e:
+            # Create a response containing a string error message
+            return self.error.internal_server_error(str(e))
+
+
 registration_view = RegistrationView.as_view('register_view')
 login_view = LoginView.as_view('login_view')
+logout_view = LogoutView.as_view('logout_view')
 
 auth.add_url_rule('auth/register',
                   view_func=registration_view,
@@ -107,4 +143,8 @@ auth.add_url_rule('auth/register',
 
 auth.add_url_rule('auth/login',
                   view_func=login_view,
-                  methods=['POST', 'GET'])
+                  methods=['POST'])
+
+auth.add_url_rule('auth/logout',
+                  view_func=logout_view,
+                  methods=['POST'])

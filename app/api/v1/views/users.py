@@ -1,8 +1,10 @@
+from flask import Blueprint
 from flask.views import MethodView
 
 from app.api.v1.models.user import User
-from app.api.v1.users import user
 from app.responses import Auth, Error, Success, Response
+
+user = Blueprint('user', __name__)
 
 
 class UsersView(MethodView):

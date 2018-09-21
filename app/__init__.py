@@ -19,13 +19,13 @@ def create_app(config_name):
 
     app.register_blueprint(swaggerui_blueprint, url_prefix=swagger_url)
 
-    from app.api.v1.auth import auth as auth_blueprint
+    from app.api.v1.views.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/api/v1/')
 
-    from app.api.v1.orders import orders as orders_blueprint
+    from app.api.v1.views.orders import orders as orders_blueprint
     app.register_blueprint(orders_blueprint, url_prefix='/api/v1/')
 
-    from app.api.v1.users import user as user_blueprint
+    from app.api.v1.views.users import user as user_blueprint
     app.register_blueprint(user_blueprint, url_prefix='/api/v1')
 
     return app
