@@ -11,7 +11,7 @@ before_script:
   - source ./.travis.sh
 
 script:
-  - nosetests -sv tests --with-coverage app/ instance/
+  - nosetests --with-coverage --cover-package=app app/tests
 
 after_success:
   - coveralls
