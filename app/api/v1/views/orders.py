@@ -20,8 +20,7 @@ class OrdersView(MethodView):
         self.success = Success()
         self.response = Response()
 
-    @user_required
-    def get(self, user_id):
+    def get(self):
         """Endpoint for fetching all orders."""
         results = []
         all_orders = Orders.list_all_orders()
@@ -33,32 +32,30 @@ class OrdersView(MethodView):
         else:
             return self.error.not_found('Sorry, No orders for you!')
 
-    @user_required
-    def post(self, user_id):
+    def post(self):
         """Endpoint for adding a new order."""
         data = request.get_json(force=True)
         order_id = Database.order_count() + 1
         name = data['name']
         quantity = data['quantity']
         price = data['price']
-        date_created = datetime.datetime.now()
         created_by = data['created_by']
+        date_created = datetime.datetime.now()
         status = 'Pending'
 
         order = Orders(order_id=order_id,
                        name=name,
                        quantity=quantity,
                        price=price,
-                       date_created=date_created,
                        created_by=created_by,
+                       date_created=date_created,
                        status=status)
         order.add_order()
         created_order = Orders.find_by_id(order_id)
         return jsonify({'message': 'Order has been added successfully.',
                         'Order No {}'.format(order_id): created_order}), 201
 
-    @user_required
-    def delete(self, user_id):
+    def delete(self):
         """Endpoint for deleting all orders."""
         if Database.order_count() == 0:
             return self.error.not_found('No orders available!')
@@ -75,16 +72,14 @@ class OrderView(MethodView):
         self.success = Success()
         self.response = Response()
 
-    @user_required
-    def get(self, order_id, user_id):
+    def get(self, order_id):
         """Endpoint for fetching a particular order."""
         order = Orders.find_by_id(order_id)
         if not order:
             return self.error.not_found("Sorry, Order No {} does't exist!".format(order_id))
         return self.success.complete_request(order)
 
-    @user_required
-    def put(self, order_id, user_id):
+    def put(self, order_id):
         """Endpoint for updating a particular order."""
         order = Orders.find_by_id(order_id)
         data = request.get_json(force=True)
@@ -96,8 +91,7 @@ class OrderView(MethodView):
             order[0]['price'] = data['price']
             return jsonify({'order': order[0]}), 200
 
-    @admin_required
-    def patch(self, order_id, user_id):
+    def patch(self, order_id):
         """Endpoint for updating the status."""
         order = Orders.find_by_id(order_id)
         data = request.get_json(force=True)
@@ -107,8 +101,7 @@ class OrderView(MethodView):
             order[0]['status'] = data['status']
             return jsonify({'order': order[0]}), 200
 
-    @user_required
-    def delete(self, order_id, user_id):
+    def delete(self, order_id):
         """Endpoint for deleting a particular order."""
         order = Orders.find_by_id(order_id)
         if order:

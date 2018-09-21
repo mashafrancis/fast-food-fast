@@ -82,8 +82,8 @@ class BaseTests(unittest.TestCase):
 
     def get_user_token(self):
         """Get user token"""
-        response = self.register_user('test@gmail.com', 'test1234', 'test1234')
-        return json.loads(response.data.decode())['access_token']
+        auth_response = self.register_user('test@gmail.com', 'test1234', 'test1234')
+        return json.loads(auth_response.data.decode())['access_token']
 
     def create_order(self, token):
         """Create a dummy order"""
@@ -91,12 +91,11 @@ class BaseTests(unittest.TestCase):
             '/api/v1/orders',
             data=self.order,
             headers=dict(Authorization='Bearer ' + token),
-            content_type='application/json'
-        )
-        result = json.loads(response.data.decode())
-        self.assertEqual(response.status_code, 201)
+            content_type='application/json')
+        data = json.loads(response.data.decode())
         self.assertIn('Burger', str(response.data))
-        self.assertEqual(result['message'], u"Order has been added successfully.")
+        self.assertTrue(data['message'] == u"Order has been added successfully.")
+        self.assertEqual(response.status_code, 201)
 
     def tearDown(self):
         with self.app.app_context():
