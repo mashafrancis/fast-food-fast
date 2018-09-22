@@ -1,6 +1,6 @@
 swagger: "2.0"
 host: "127.0.0.1:5000"
-basePath: "api/v1/docs/"
+basePath: "/api/v1/"
 securityDefinitions:
   bearer:
     type: apiKey

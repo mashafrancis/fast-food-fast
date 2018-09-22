@@ -1258,13 +1258,13 @@
                         i = "loading" === o.loadingStatus(), a = "failed" === o.loadingStatus(), s = {};
                     return a && (s.color = "red"), i && (s.color = "#aaa"), p.default.createElement("div", {className: "topbar"}, p.default.createElement("div", {className: "wrapper"}, p.default.createElement("div", {className: "topbar-wrapper"}, p.default.createElement(n, {
                         href: "#",
-                        title: "Swagger UX"
+                        title: "Fast Food UX"
                     }, p.default.createElement("img", {
                         height: "30",
                         width: "30",
-                        src: "./andela.png",
+                        src: "./favicon.ico",
                         alt: "Andela API Docs"
-                    }), p.default.createElement("span", null, "andela")), p.default.createElement("form", {
+                    }), p.default.createElement("span", null, "fast-food-fast")), p.default.createElement("form", {
                         className: "download-url-wrapper",
                         onSubmit: this.downloadUrl
                     }, p.default.createElement("input", {

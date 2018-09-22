@@ -11,7 +11,7 @@ def get_swaggerui_blueprint(base_url, api_url, config=None, oauth_config=None):
                            template_folder='templates')
 
     default_config = {
-        'app_name': 'Swagger UI',
+        'app_name': 'Fast-Food-Fast',
         'dom_id': '#swagger-ui',
         'url': api_url,
         'layout': 'StandaloneLayout'
