@@ -37,25 +37,17 @@ class OrdersView(MethodView):
     def post(self, user_id):
         """Endpoint for adding a new order."""
         data = request.get_json(force=True)
-        order_id = Database.order_count() + 1
         name = data['name']
         quantity = data['quantity']
         price = data['price']
         created_by = data['created_by']
-        date_created = datetime.datetime.now()
-        status = 'Pending'
 
-        order = Orders(order_id=order_id,
-                       name=name,
+        order = Orders(name=name,
                        quantity=quantity,
                        price=price,
-                       created_by=created_by,
-                       date_created=date_created,
-                       status=status)
+                       created_by=created_by)
         order.add_order()
-        created_order = Orders.find_by_id(order_id)
-        return jsonify({'message': 'Order has been added successfully.',
-                        'Order No {}'.format(order_id): created_order}), 201
+        return self.success.create_resource('Order has been added successfully.')
 
     @user_required
     def delete(self, user_id):

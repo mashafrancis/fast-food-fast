@@ -1,6 +1,6 @@
 swagger: "2.0"
-host: "localhost"
-basePath: "/apidocs/#/"
+host: "127.0.0.1:5000"
+basePath: "api/v1/docs/"
 securityDefinitions:
   bearer:
     type: apiKey

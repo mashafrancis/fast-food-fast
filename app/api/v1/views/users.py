@@ -8,15 +8,18 @@ from app.responses import Auth, Error, Success, Response
 user = Blueprint('user', __name__)
 
 
-class UsersView(MethodView):
-    """This class-based view handles user login and access token generation"""
-
+class Responses:
+    """This class defines the different responses for the API"""
     def __init__(self):
         super().__init__()
-        self.auth = Auth()
         self.error = Error()
         self.success = Success()
         self.response = Response()
+        self.auth = Auth()
+
+
+class UsersView(MethodView, Responses):
+    """This class-based view handles user login and access token generation"""
 
     @user_required
     def get(self, user_id):
@@ -32,13 +35,7 @@ class UsersView(MethodView):
             return self.error.not_found('No users to display!')
 
 
-class UserView(MethodView):
-    def __init__(self):
-        super().__init__()
-        self.auth = Auth()
-        self.error = Error()
-        self.success = Success()
-        self.response = Response()
+class UserView(MethodView, Responses):
 
     def get(self, user_id):
         """Endpoint for fetching a particular order."""
