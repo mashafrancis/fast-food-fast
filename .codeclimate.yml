@@ -1,0 +1,6 @@
+## configuration to be excluded...
+exclude_patterns:
+- "tests/"
+- "spec/"
+- "**/vendor/"
+- "swagger_ui"
