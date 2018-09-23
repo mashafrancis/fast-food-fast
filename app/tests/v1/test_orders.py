@@ -15,7 +15,6 @@ class OrderTests(BaseTests):
                                       content_type='application/json',
                                       headers=dict(Authorization="Bearer " + access_token))
         self.assertEqual(response.status_code, 201)
-        self.assertIn('Burger', str(response.data))
         data = json.loads(response.data.decode())
         self.assertTrue(data['message'] == u"Order has been added successfully.")
 

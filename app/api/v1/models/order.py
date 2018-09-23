@@ -57,4 +57,3 @@ class Orders(Savable):
     @staticmethod
     def delete_all():
         return Database.remove_all(Orders.collection)
-

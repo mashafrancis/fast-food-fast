@@ -31,19 +31,25 @@ class BaseTests(unittest.TestCase):
             'status': 'Accepted'
         })
 
-    def register_user(self, email, password, confirm_password):
+    def register_user(self, username, email, password, confirm_password):
         """Register user with dummy data"""
         return self.client().post(
             '/api/v1/auth/register',
             content_type='application/json',
-            data=json.dumps(dict(email=email, password=password, confirm_password=confirm_password)))
+            data=json.dumps(dict(username=username,
+                                 email=email,
+                                 password=password,
+                                 confirm_password=confirm_password)))
 
-    def register_user_wrong_content(self, email, password, confirm_password):
+    def register_user_wrong_content(self, username, email, password, confirm_password):
         """Register user with dummy data"""
         return self.client().post(
             '/api/v1/auth/register',
             content_type='wrong',
-            data=json.dumps(dict(email=email, password=password, confirm_password=confirm_password)))
+            data=json.dumps(dict(username=username,
+                                 email=email,
+                                 password=password,
+                                 confirm_password=confirm_password)))
 
     def login_user(self, email, password):
         """Register user with dummy data"""
@@ -55,10 +61,10 @@ class BaseTests(unittest.TestCase):
     def user_register_login(self):
         """Method for registration and login"""
         # Register user
-        response = self.register_user('moonpie@gmail.com', 'test1234', 'test1234')
+        response = self.register_user('moonpie', 'moonpie@gmail.com', 'test1234', 'test1234')
         data = json.loads(response.data.decode())
         self.assertTrue(data['status'] == 'User Created')
-        self.assertTrue(data['message'] == u"User moonpie@gmail.com successfully registered")
+        self.assertTrue(data['message'] == u"User moonpie@gmail.com successfully registered.")
         self.assertTrue(response.content_type == 'application/json')
         self.assertEqual(response.status_code, 201)
 
@@ -82,7 +88,7 @@ class BaseTests(unittest.TestCase):
 
     def get_user_token(self):
         """Get user token"""
-        auth_response = self.register_user('test@gmail.com', 'test1234', 'test1234')
+        auth_response = self.register_user('tester', 'test@gmail.com', 'test1234', 'test1234')
         return json.loads(auth_response.data.decode())['access_token']
 
     def create_order(self, token):
@@ -98,7 +104,7 @@ class BaseTests(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
 
     def user_token_get(self):
-        self.register_user('test@gmail.com', 'test1234', 'test1234')
+        self.register_user('tester', 'test@gmail.com', 'test1234', 'test1234')
         data = self.login_user('test@gmail.com', 'test1234')
         access_token = json.loads(data.data.decode())['access_token']
         return access_token
