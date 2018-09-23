@@ -38,8 +38,12 @@ paths:
           description: created
         400:
           description: bad request
-        409:
+        401:
           description: unauthorized
+        409:
+          description: conflict
+        500:
+          description: internal server error
       tags:
         - Users
 
@@ -327,6 +331,10 @@ definitions:
   UserSignup:
       type: object
       properties:
+        username:
+          description: username for user
+          type: string
+          example: tester
         email:
           description: email for user
           type: string
@@ -369,6 +377,3 @@ definitions:
         created_by:
           type: string
           example: Francis Masha
-        status:
-          type: string
-          example: Pending

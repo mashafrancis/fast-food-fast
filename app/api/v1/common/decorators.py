@@ -16,7 +16,7 @@ def user_required(f):
                 'error': 'Login or Register to get authorized. If you had logged in, your session expired.'}), 401)
         else:
             token = header_auth.split("Bearer ")
-            access_token = token[1]
+            access_token = token[0]
             access_token = access_token.encode()
             if access_token:
                 blacklisted = BlackList.check_token(access_token)
