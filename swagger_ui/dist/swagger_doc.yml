@@ -204,7 +204,7 @@ paths:
   /orders/{order_id}:
     get:
       tags:
-        - Orders by Id
+        - Orders
       summary: Get a single order by id
       operationId: listOrders
       parameters:
@@ -232,7 +232,7 @@ paths:
 
     put:
       tags:
-        - Orders by Id
+        - Orders
       summary: Update an order
       operationId: updateOrder
       parameters:
@@ -262,7 +262,7 @@ paths:
 
     patch:
       tags:
-        - Orders by Id
+        - Orders
       summary: Update an order single value
       operationId: updateStatus
       parameters:
@@ -300,7 +300,7 @@ paths:
 
     delete:
       tags:
-        - Orders by Id
+        - Orders
       summary: Deletes an order by Id
       operationId: deleteOrder
       parameters:
@@ -325,6 +325,85 @@ paths:
           description: not found
         500:
           description: internal server errorde
+
+  /categories:
+    get:
+      tags:
+        - Categories
+      summary: List all categories
+      operationId: listCategories
+      parameters:
+      - name: access-token
+        in: header
+        type: string
+        required: true
+      responses:
+        200:
+          description: ok
+        400:
+          description: bad request
+        401:
+          description: unauthorized
+        403:
+          description: forbidden status
+        404:
+          description: not found
+        500:
+          description: internal server error
+
+    post:
+      tags:
+        - Categories
+      summary: Create a new category
+      operationId: addCategory
+      parameters:
+      - name: access-token
+        in: header
+        type: string
+        required: true
+      - name: payload
+        required: true
+        in: body
+        type: string
+        schema:
+            $ref: '#/definitions/Category'
+      responses:
+        200:
+          description: ok
+        400:
+          description: bad request
+        401:
+          description: unauthorized
+        403:
+          description: forbidden status
+        404:
+          description: not found
+        500:
+          description: internal server error
+
+    delete:
+      tags:
+        - Categories
+      summary: Delete all categories
+      operationId: deleteCategory
+      parameters:
+      - name: access-token
+        in: header
+        type: string
+        required: true
+      responses:
+        200:
+          description: ok
+        400:
+          description: bad request
+        401:
+          description: unauthorized
+        403:
+          description: forbidden status
+        404:
+          description: not found
+        500:
+          description: internal server error
 
 
 definitions:
@@ -377,3 +456,18 @@ definitions:
         created_by:
           type: string
           example: Francis Masha
+
+  Category:
+      type: object
+      properties:
+        category_id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Drinks
+        description:
+          type: string
+          example: Get your drinks!
+
