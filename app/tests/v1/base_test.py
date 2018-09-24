@@ -36,6 +36,11 @@ class BaseTests(unittest.TestCase):
             'description': 'Get your drinks!'
         })
 
+        self.category2 = json.dumps({
+            'name': 'Drinks-2',
+            'description': 'Get your drinks-2!'
+        })
+
     def register_user(self, username, email, password, confirm_password):
         """Register user with dummy data"""
         return self.client().post(

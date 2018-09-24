@@ -32,3 +32,7 @@ class Database:
     @classmethod
     def order_count(cls):
         return len(cls.content['orders'])
+
+    @classmethod
+    def category_count(cls):
+        return len(cls.content['category'])

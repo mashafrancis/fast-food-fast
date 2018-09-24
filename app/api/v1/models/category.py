@@ -8,7 +8,7 @@ class Category(Savable):
     collection = 'category'
 
     def __init__(self, name, description):
-        self.category_id = Database.order_count() + 1
+        self.category_id = Database.category_count() + 1
         self.name = name
         self.description = description
         self.date_created = datetime.now()
