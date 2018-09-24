@@ -22,10 +22,13 @@ def create_app(config_name):
     from app.api.v1.views.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/api/v1/')
 
-    from app.api.v1.views.orders import orders as orders_blueprint
+    from app.api.v1.views.order import orders as orders_blueprint
     app.register_blueprint(orders_blueprint, url_prefix='/api/v1/')
 
-    from app.api.v1.views.users import user as user_blueprint
+    from app.api.v1.views.user import user as user_blueprint
     app.register_blueprint(user_blueprint, url_prefix='/api/v1')
+
+    from app.api.v1.views.category import category as category_blueprint
+    app.register_blueprint(category_blueprint, url_prefix='/api/v1')
 
     return app

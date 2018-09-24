@@ -11,7 +11,7 @@ class CategoryTests(BaseTests):
         """Test API can create an order (POST)"""
         access_token = self.user_token_get()
 
-        response = self.client().post('/api/v1/category', data=self.order,
+        response = self.client().post('/api/v1/category', data=self.category,
                                       content_type='application/json',
                                       headers=dict(Authorization="Bearer " + access_token))
         self.assertEqual(response.status_code, 201)

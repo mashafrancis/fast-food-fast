@@ -32,6 +32,17 @@ class Response:
         return obj
 
     @staticmethod
+    def define_category(category):
+        """Return a dictionary of the orders object"""
+        obj = {
+            'category_id': category['category_id'],
+            'name': category['name'],
+            'description': category['description'],
+            'date_created': category['date_created']
+        }
+        return obj
+
+    @staticmethod
     def complete_request(message):
         """For a successful request"""
         response = jsonify({"status": "OK",

@@ -66,6 +66,10 @@ class Savable(metaclass=ABCMeta):
         collection = 'role'
         Database.insert(collection, self.to_dict())
 
+    def save_category(self):
+        collection = 'category'
+        Database.insert(collection, self.to_dict())
+
     @abstractmethod
     def to_dict(self):
         pass
