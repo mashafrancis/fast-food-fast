@@ -27,8 +27,11 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Technologies Used
 **Flask** For API implementation
+
 **PyJWT** For securing endpoints
+
 **Pytest** For documentation
+
 **SwaggerUI** For API documentation
 
 ### Installation
@@ -72,30 +75,35 @@ The endpoints can be tested using Postman
 The preferred JSON object to be returned by the API should be structured as follows:
 
 ### Users (For Authentication)
-"user_registration": {
+"user_registration": 
+      
       "username": "tester",
       "email": "test@gmail.com",
       "password": "test1234",
       "confirm_password": "test1234"
-    }
-"user_login": {
+ 
+    
+"user_login": 
+
       "email": "test@gmail.com",
       "password": "test1234"
-    }
+    
+    
 
-"order": {
+"order": 
+
       "order_id": 1,
       "name": "Burger",
       "quantity": 4,
       "price": 1000,
       "created_by": "Francis Masha"
-    }
 
-"category": {
+"category": 
+
       "category_id": 1,
       "name": "Drinks",
       "description": "Get your drinks!"
-    }
+
 
 
 ## Version
