@@ -66,7 +66,7 @@ an auth route for registration and login.
  PATCH               | /api/v1/orders/<order_id>                      | Update the status of a specific order
  GET                 | /api/v1/category                               | Get a specific food category
  POST                | /api/v1/category                               | Add a food category
- DELETE              | /api/v2/category                               | Delete all categories
+ DELETE              | /api/v1/category                               | Delete all categories
 
 The endpoints can be tested using Postman
 **Note** After login or signup, an access token is returned that needs to be passed in the header of all the other requests.
