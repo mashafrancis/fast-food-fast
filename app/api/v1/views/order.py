@@ -62,7 +62,7 @@ class OrdersView(MethodView):
 
 
 class OrderView(MethodView):
-    """Contains GET, PUT and DELETE methods for manipulating a single ride"""
+    """Contains GET, PUT and DELETE methods for manipulating a single order"""
 
     @user_required
     def get(self, order_id, user_id):

@@ -408,66 +408,66 @@ paths:
 
 definitions:
   UserSignup:
-      type: object
-      properties:
-        username:
-          description: username for user
-          type: string
-          example: tester
-        email:
-          description: email for user
-          type: string
-          example: test@gmail.com
-        password:
-          description: password for user
-          type: string
-          example: test1234
-        confirm_password:
-          description: confirmation password
-          type: string
-          example: test1234
+    type: object
+    properties:
+      username:
+        description: username for user
+        type: string
+        example: tester
+      email:
+        description: email for user
+        type: string
+        example: test@gmail.com
+      password:
+        description: password for user
+        type: string
+        example: test1234
+      confirm_password:
+        description: confirmation password
+        type: string
+        example: test1234
 
   UserLogin:
-      type: object
-      properties:
-        email:
-          type: string
-          example: test@gmail.com
-        password:
-          type: string
-          example: test1234
+    type: object
+    properties:
+      email:
+        type: string
+        example: test@gmail.com
+      password:
+        type: string
+        example: test1234
 
   Orders:
-      type: object
-      properties:
-        order_id:
-          type: integer
-          format: int64
-          example: 1
-        name:
-          type: string
-          example: Burger
-        quantity:
-          type: string
-          example: 4
-        price:
-          type: string
-          example: 1000
-        created_by:
-          type: string
-          example: Francis Masha
+    type: object
+    properties:
+      order_id:
+        type: integer
+        format: int64
+        example: 1
+      name:
+        type: string
+        example: Burger
+      quantity:
+        type: string
+        example: 4
+      price:
+        type: string
+        example: 1000
+      created_by:
+        type: string
+        example: Francis Masha
 
   Category:
-      type: object
-      properties:
-        category_id:
-          type: integer
-          format: int64
-          example: 1
-        name:
-          type: string
-          example: Drinks
-        description:
-          type: string
-          example: Get your drinks!
+    type: object
+    properties:
+      category_id:
+        type: integer
+        format: int64
+        example: 1
+      name:
+        type: string
+        example: Drinks
+      description:
+        type: string
+        example: Get your drinks!
 
