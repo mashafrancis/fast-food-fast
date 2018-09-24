@@ -96,7 +96,7 @@ The preferred JSON object to be returned by the API should be structured as foll
       "name": "Burger",
       "quantity": 4,
       "price": 1000,
-      "created_by": "Francis Masha"
+      "created_by": "Test"
 
 "category": 
 
