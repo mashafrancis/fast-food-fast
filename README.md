@@ -152,10 +152,15 @@ The preferred JSON object to be returned by the API should be structured as foll
 ## Version
 Most recent version: version 1
 
-### Documentation
+## Documentation Links
+
+#### Heroku Link
 [Heroku](https://masha-fast-food.herokuapp.com/api/v1/docs/)
 
-### Frontend
+#### Postman Link
+[Postman](https://documenter.getpostman.com/view/1082100/RWaPumfC)
+
+#### Frontend Templates
 [Github Pages](https://mashafrancis.github.io/fast-food-fast/)
 
 ## Author
