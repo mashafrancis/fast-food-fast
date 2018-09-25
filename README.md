@@ -74,8 +74,9 @@ The endpoints can be tested using Postman
 ## API Spec
 The preferred JSON object to be returned by the API should be structured as follows:
 
-### Users (For Authentication):
-POST /v1/auth/register
+#### Users (For Authentication):
+(1). POST /v1/auth/register
+      
       
       "user_registration":
          {
@@ -85,19 +86,25 @@ POST /v1/auth/register
             "confirm_password": "test1234"
          }
 
-POST /v1/auth/login
+(2). POST /v1/auth/login
+
 
       "user_login":
          {
             "email": "test@gmail.com",
             "password": "test1234"
          }
-    
-    
-### Orders: 
-GET /v1/orders - Get all orders
 
-POST /v1/orders - Create a new order
+#### Users:
+(3). GET /v1/users - Get all user
+
+(4). GET /v1/users/1 - Get all user by their user_id
+    
+#### Orders: 
+(5). GET /v1/orders - Get all orders
+
+(6). POST /v1/orders - Create a new order
+
 
       "order":
          {
@@ -107,11 +114,11 @@ POST /v1/orders - Create a new order
             "created_by": "Test"
          }
          
-DELETE /v1/orders - Delete all orders
+(7). DELETE /v1/orders - Delete all orders
 
-GET /v1/orders/1 - Get an order by order_id
+(8). GET /v1/orders/1 - Get an order by order_id
 
-PUT /v1/orders/1 - Edit an existing order
+(9). PUT /v1/orders/1 - Edit an existing order
 
     "order":
          {
@@ -120,19 +127,19 @@ PUT /v1/orders/1 - Edit an existing order
             "price": 200
          }
          
-PATCH /v1/orders/1 - Update status of a particular order
+(10). PATCH /v1/orders/1 - Update status of a particular order
 
     "order":
          {
             "status": "Completed",
          }
          
-DELETE /v1/orders/1 - Delete an existing order by order_id
+(11). DELETE /v1/orders/1 - Delete an existing order by order_id
  
-### Category
-GET /v1/category - Get all food categories
+#### Category:
+(12). GET /v1/category - Get all food categories
 
-POST /v1/category - Create a new category
+(13). POST /v1/category - Create a new category
 
     "category": 
        {
