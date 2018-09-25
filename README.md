@@ -53,7 +53,7 @@ an auth route for registration and login.
 ### Available Endpoints
 | Method             | Endpoint                                       | Functionality
 |:------------------:|:----------------------------------------------:|:--------------------------------------:|
- POST                | /api/v1/auth/signup                            | Register a new account
+ POST                | /api/v1/auth/register                          | Register a new account
  POST                | /api/v1/auth/login                             | Login into application
  GET                 | /api/v1/users                                  | Get all users
  GET                 | /api/v1/users/<user_id>                        | Get a single user by user_id
@@ -74,35 +74,71 @@ The endpoints can be tested using Postman
 ## API Spec
 The preferred JSON object to be returned by the API should be structured as follows:
 
-### Users (For Authentication)
-"user_registration": 
+### Users (For Authentication):
+POST /v1/auth/register
       
-      "username": "tester",
-      "email": "test@gmail.com",
-      "password": "test1234",
-      "confirm_password": "test1234"
+      "user_registration":
+         {
+            "username": "tester",
+            "email": "test@gmail.com",
+            "password": "test1234",
+            "confirm_password": "test1234"
+         }
+
+POST /v1/auth/login
+
+      "user_login":
+         {
+            "email": "test@gmail.com",
+            "password": "test1234"
+         }
+    
+    
+### Orders: 
+GET /v1/orders - Get all orders
+
+POST /v1/orders - Create a new order
+
+      "order":
+         {
+            "name": "Burger",
+            "quantity": 4,
+            "price": 1000,
+            "created_by": "Test"
+         }
+         
+DELETE /v1/orders - Delete all orders
+
+GET /v1/orders/1 - Get an order by order_id
+
+PUT /v1/orders/1 - Edit an existing order
+
+    "order":
+         {
+            "name": "Fries",
+            "quantity": 2,
+            "price": 200
+         }
+         
+PATCH /v1/orders/1 - Update status of a particular order
+
+    "order":
+         {
+            "status": "Completed",
+         }
+         
+DELETE /v1/orders/1 - Delete an existing order by order_id
  
-    
-"user_login": 
+### Category
+GET /v1/category - Get all food categories
 
-      "email": "test@gmail.com",
-      "password": "test1234"
-    
-    
+POST /v1/category - Create a new category
 
-"order": 
-
-      "order_id": 1,
-      "name": "Burger",
-      "quantity": 4,
-      "price": 1000,
-      "created_by": "Test"
-
-"category": 
-
-      "category_id": 1,
-      "name": "Drinks",
-      "description": "Get your drinks!"
+    "category": 
+       {
+          "name": "Drinks",
+          "description": "Get your drinks!"
+       }
 
 
 
