@@ -4,7 +4,7 @@ import time
 from abc import abstractmethod, ABCMeta
 from passlib.handlers.pbkdf2 import pbkdf2_sha512
 
-from app.database import Database
+from app.data import Database
 
 
 class Utils:
@@ -12,6 +12,16 @@ class Utils:
     def email_is_valid(email):
         email_address_matcher = re.compile('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')
         return True if email_address_matcher.match(email) else False
+
+    @staticmethod
+    def password_checker(password):
+        password_checker = re.match(r"^(?=.*[a-z])(?=.*[0-9]){6}", password)
+        return True if password_checker else False
+
+    @staticmethod
+    def username_checker(username):
+        username_checker = re.match(r"(?=^.{3,}$)(?=.*[a-z])^[A-Za-z0-9_-]+( +[A-Za-z0-9_-]+)*$", username)
+        return True if username_checker else False
 
     @staticmethod
     def timestamp():
@@ -46,6 +56,14 @@ class Savable(metaclass=ABCMeta):
 
     def save_order(self):
         collection = 'orders'
+        Database.insert(collection, self.to_dict())
+
+    def save_blacklist(self):
+        collection = 'blacklist'
+        Database.insert(collection, self.to_dict())
+
+    def save_role(self):
+        collection = 'role'
         Database.insert(collection, self.to_dict())
 
     @abstractmethod

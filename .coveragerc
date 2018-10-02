@@ -4,9 +4,11 @@ omit =
     *site-packages/*
     *site-packages/nose/*
     *__init__*
+    *__repr__*
     *tests/*
     */usr/*
     *venv*
+    *swagger_ui/*
 exclude_lines=
     pragma: no cover
     raise Exception()
